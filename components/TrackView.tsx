@@ -6,10 +6,8 @@ import {
   ExternalLink,
   Download,
   Upload,
-  RotateCcw,
   Github,
   Youtube,
-  ShieldCheck,
 } from "lucide-react";
 import { type Phase, type TrackItem } from "@/lib/data";
 import {
@@ -83,17 +81,10 @@ export default function TrackView({
 }: TrackViewProps) {
   const [state, setState] = useState<ProgressMap>({});
   const [openPhase, setOpenPhase] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<"material" | "day">("material");
   const [rangeStart, setRangeStart] = useState<string | null>(null);
-  const [selected, setSelected] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setState(loadProgress());
-  }, []);
-
-  const persist = useCallback((next: ProgressMap) => {
-    setState(next);
-    saveProgress(next);
   }, []);
 
   const totalItems = useMemo(
@@ -188,24 +179,6 @@ export default function TrackView({
         </div>
       </div>
 
-      {/* view toggle (cyber only) */}
-      {category === "cyber" && (
-        <div className="inline-flex gap-1 bg-white border border-line rounded-xl p-1 mb-5">
-          <button
-            className={`view-btn ${viewMode === "material" ? "is-active" : ""}`}
-            onClick={() => setViewMode("material")}
-          >
-            Per materi
-          </button>
-          <button
-            className={`view-btn ${viewMode === "day" ? "is-active" : ""}`}
-            onClick={() => setViewMode("day")}
-          >
-            Per hari
-          </button>
-        </div>
-      )}
-
       {/* graph nodes */}
       <div className="flex flex-wrap gap-3 mb-4">
         {phases.map((p, idx) => {
@@ -246,7 +219,6 @@ export default function TrackView({
           key={openPhase}
           phase={phases.find((p) => p.id === openPhase)!}
           category={category}
-          viewMode={viewMode}
           done={phaseDone(phases.find((p) => p.id === openPhase)!)}
           isDone={(itemIdx) =>
             isDone(state, category, openPhase, itemKey(itemIdx))
@@ -262,18 +234,6 @@ export default function TrackView({
         <a href="/" className="font-semibold text-soft hover:text-ink">
           ← Pilih jalur
         </a>
-        <button
-          className="btn-ghost flex items-center gap-2"
-          onClick={() => {
-            if (confirm("Reset seluruh progres kategori ini?")) {
-              const next = { ...state };
-              delete next[category];
-              persist(next);
-            }
-          }}
-        >
-          <RotateCcw size={14} /> Reset progres
-        </button>
       </div>
     </div>
   );
@@ -282,7 +242,6 @@ export default function TrackView({
 function PhasePanel({
   phase,
   category,
-  viewMode,
   done,
   isDone,
   onCheck,
@@ -291,7 +250,6 @@ function PhasePanel({
 }: {
   phase: Phase;
   category: string;
-  viewMode: "material" | "day";
   done: number;
   isDone: (itemIdx: number) => boolean;
   onCheck: (phaseId: string, itemIdx: number, checked: boolean, e: React.MouseEvent) => void;
@@ -300,19 +258,6 @@ function PhasePanel({
 }) {
   const items = phase.items;
   const total = items.length;
-
-  // day grouping (cyber only)
-  const buckets = useMemo(() => {
-    if (viewMode !== "day" || !phase.days) return null;
-    const [start, end] = phase.days;
-    const dayCount = end - start + 1;
-    const b: TrackItem[][] = Array.from({ length: dayCount }, () => []);
-    items.forEach((it, i) => {
-      const idx = Math.min(Math.floor(i / Math.ceil(items.length / dayCount)), dayCount - 1);
-      b[idx].push(it);
-    });
-    return b;
-  }, [viewMode, phase, items]);
 
   const renderList = (list: TrackItem[], offset: number) => (
     <ul className="flex flex-col gap-1.5">
@@ -337,9 +282,7 @@ function PhasePanel({
               className="pointer-events-none"
               tabIndex={-1}
             />
-            {category === "math" && (
-              <span className="check-num">{String(globalIdx + 1).padStart(2, "0")}</span>
-            )}
+            <span className="check-num">{String(globalIdx + 1).padStart(2, "0")}</span>
             <span aria-hidden="true">{typeIcon}</span>
             <div className="check-body">
               <span className="check-label">{it.label}</span>
@@ -394,24 +337,7 @@ function PhasePanel({
         </div>
         <p className="text-sm text-soft mb-3">{phase.desc}</p>
 
-        {buckets
-          ? buckets.map((b, bi) => {
-              const offset = buckets.slice(0, bi).reduce((a, x) => a + x.length, 0);
-              return (
-                <div key={bi} className="mb-4 last:mb-0">
-                  <div className="flex items-center justify-between border-b border-line pb-1 mb-2">
-                    <span className="font-extrabold text-sm">
-                      Day {phase.days![0] + bi}
-                    </span>
-                    <span className="text-xs text-muted font-semibold">
-                      {b.length} item
-                    </span>
-                  </div>
-                  {renderList(b, offset)}
-                </div>
-              );
-            })
-          : renderList(items, 0)}
+        {renderList(items, 0)}
       </div>
     </div>
   );

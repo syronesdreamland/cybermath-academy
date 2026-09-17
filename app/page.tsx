@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ShieldCheck, Sigma, ArrowRight } from "lucide-react";
-import { CYBER_PHASES, MATH_TRACK } from "@/lib/data";
+import { CYBER_PHASES, MATH_PHASES } from "@/lib/data";
 import {
   loadProgress,
   categoryProgress,
@@ -18,7 +18,7 @@ export default function Home() {
   }, []);
 
   const cyber = categoryProgress(state, "cyber", CYBER_PHASES);
-  const math = categoryProgress(state, "math", [MATH_TRACK]);
+  const math = categoryProgress(state, "math", MATH_PHASES);
 
   return (
     <main className="min-h-screen flex flex-col">
