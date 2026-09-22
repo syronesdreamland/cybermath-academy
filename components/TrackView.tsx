@@ -20,7 +20,7 @@ import {
 type TrackViewProps = {
   category: string;
   phases: Phase[];
-  accent: "cyber" | "math";
+  accent: "cyber" | "math" | "pentest";
   sourceLabel: string;
   sourceUrl: string;
   sourceIcon?: "github" | "youtube";
@@ -30,7 +30,7 @@ function pct(done: number, total: number) {
   return total === 0 ? 0 : Math.round((done / total) * 100);
 }
 
-function Ring({ value, accent }: { value: number; accent: "cyber" | "math" }) {
+function Ring({ value, accent }: { value: number; accent: "cyber" | "math" | "pentest" }) {
   const size = 72;
   const stroke = 7;
   const r = (size - stroke) / 2;
@@ -150,11 +150,11 @@ export default function TrackView({
       {/* head */}
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
         <div>
-          <span className={`eyebrow ${accent === "cyber" ? "text-cyber" : "text-math"}`}>
-            {category === "cyber" ? "Cybersecurity" : "Mathematics"}
+          <span className={`eyebrow ${accent === "cyber" ? "text-cyber" : accent === "math" ? "text-math" : "text-pentest"}`}>
+            {category === "cyber" ? "Cybersecurity" : category === "math" ? "Mathematics" : "Penetration Testing"}
           </span>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mt-1">
-            {category === "cyber" ? "90-Day Study Plan" : "Professor Dave Explains"}
+            {category === "cyber" ? "90-Day Study Plan" : category === "math" ? "Professor Dave Explains" : "Problem-First Path"}
           </h1>
         </div>
         <a className="source-link" href={sourceUrl} target="_blank" rel="noopener">
@@ -190,7 +190,7 @@ export default function TrackView({
           return (
             <button
               key={p.id}
-              className={`node ${accent === "cyber" ? "node--cyber" : "node--math"} ${stateCls} ${isOpen ? "is-open" : ""} flex-1 min-w-[200px]`}
+              className={`node node--${accent} ${stateCls} ${isOpen ? "is-open" : ""} flex-1 min-w-[200px]`}
               onClick={() => setOpenPhase(isOpen ? null : p.id)}
               aria-expanded={isOpen}
             >
@@ -201,7 +201,7 @@ export default function TrackView({
                 <span className="node-range">
                   {category === "cyber"
                     ? `Day ${p.days![0]}–${p.days![1]} · ${pct(done, total)}%`
-                    : `${total} video · ${pct(done, total)}%`}
+                    : `${total} item · ${pct(done, total)}%`}
                 </span>
               </span>
               <ChevronDown
@@ -254,7 +254,7 @@ function PhasePanel({
   isDone: (itemIdx: number) => boolean;
   onCheck: (phaseId: string, itemIdx: number, checked: boolean, e: React.MouseEvent) => void;
   onClose: () => void;
-  accent: "cyber" | "math";
+  accent: "cyber" | "math" | "pentest";
 }) {
   const items = phase.items;
   const total = items.length;

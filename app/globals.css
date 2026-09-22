@@ -66,6 +66,7 @@ body {
 .ring-fg { stroke-linecap: round; transition: stroke-dashoffset 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .ring-fg--cyber { stroke: #0f766e; }
 .ring-fg--math { stroke: #4338ca; }
+.ring-fg--pentest { stroke: #b45309; }
 
 /* checkbox range selection highlight */
 .check-item.is-selected {
@@ -96,6 +97,7 @@ body {
 }
 .pill--cyber svg { color: #0f766e; }
 .pill--math svg { color: #4338ca; }
+.pill--pentest svg { color: #b45309; }
 
 .eyebrow {
   display: inline-block;
@@ -139,6 +141,7 @@ body {
 }
 .track-icon--cyber { background: #ccfbf1; color: #0f766e; }
 .track-icon--math { background: #e0e7ff; color: #4338ca; }
+.track-icon--pentest { background: #fef3c7; color: #b45309; }
 .track-body { flex: 1; min-width: 0; }
 .track-label {
   font-size: 11px;
@@ -184,6 +187,7 @@ body {
 .node.is-open { border-color: #0f172a; }
 .node--cyber { border-left: 4px solid #0f766e; }
 .node--math { border-left: 4px solid #4338ca; }
+.node--pentest { border-left: 4px solid #b45309; }
 
 /* checklist item */
 .check-item {

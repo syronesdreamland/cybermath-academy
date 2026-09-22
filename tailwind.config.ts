@@ -20,6 +20,10 @@ module.exports = {
           DEFAULT: "#4338ca",
           soft: "#e0e7ff",
         },
+        pentest: {
+          DEFAULT: "#b45309",
+          soft: "#fef3c7",
+        },
         gold: "#d97706",
       },
       fontFamily: {
