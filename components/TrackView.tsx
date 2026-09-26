@@ -20,17 +20,27 @@ import {
 type TrackViewProps = {
   category: string;
   phases: Phase[];
-  accent: "cyber" | "math" | "pentest";
+  accent: "cyber" | "math" | "pentest" | "aws" | "sqli";
   sourceLabel: string;
   sourceUrl: string;
-  sourceIcon?: "github" | "youtube";
+  sourceIcon?: "github" | "youtube" | "dicoding";
+};
+
+export type Accent = "cyber" | "math" | "pentest" | "aws" | "sqli";
+
+const CAT_META: Record<string, { label: string; title: string }> = {
+  cyber: { label: "Cybersecurity", title: "90-Day Study Plan" },
+  math: { label: "Mathematics", title: "Professor Dave Explains" },
+  pentest: { label: "Penetration Testing", title: "Problem-First Path" },
+  aws: { label: "AWS Cloud", title: "Dasar Cloud & Gen AI — Dicoding" },
+  sqli: { label: "Web Security", title: "PortSwigger — SQL Injection" },
 };
 
 function pct(done: number, total: number) {
   return total === 0 ? 0 : Math.round((done / total) * 100);
 }
 
-function Ring({ value, accent }: { value: number; accent: "cyber" | "math" | "pentest" }) {
+function Ring({ value, accent }: { value: number; accent: Accent }) {
   const size = 72;
   const stroke = 7;
   const r = (size - stroke) / 2;
@@ -150,11 +160,11 @@ export default function TrackView({
       {/* head */}
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
         <div>
-          <span className={`eyebrow ${accent === "cyber" ? "text-cyber" : accent === "math" ? "text-math" : "text-pentest"}`}>
-            {category === "cyber" ? "Cybersecurity" : category === "math" ? "Mathematics" : "Penetration Testing"}
+          <span className={`eyebrow text-${accent}`}>
+            {CAT_META[category]?.label ?? category}
           </span>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mt-1">
-            {category === "cyber" ? "90-Day Study Plan" : category === "math" ? "Professor Dave Explains" : "Problem-First Path"}
+            {CAT_META[category]?.title ?? category}
           </h1>
         </div>
         <a className="source-link" href={sourceUrl} target="_blank" rel="noopener">
@@ -254,7 +264,7 @@ function PhasePanel({
   isDone: (itemIdx: number) => boolean;
   onCheck: (phaseId: string, itemIdx: number, checked: boolean, e: React.MouseEvent) => void;
   onClose: () => void;
-  accent: "cyber" | "math" | "pentest";
+  accent: Accent;
 }) {
   const items = phase.items;
   const total = items.length;
@@ -317,7 +327,7 @@ function PhasePanel({
             <div className="text-sm text-soft">
               {phase.days
                 ? `Day ${phase.days[0]}–${phase.days[1]} · ${done}/${total} selesai`
-                : `${total} video · ${done} selesai`}
+                : `${total} item · ${done} selesai`}
             </div>
           </div>
         </div>

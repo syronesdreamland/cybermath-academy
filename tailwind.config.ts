@@ -24,6 +24,14 @@ module.exports = {
           DEFAULT: "#b45309",
           soft: "#fef3c7",
         },
+        aws: {
+          DEFAULT: "#c2410c",
+          soft: "#ffedd5",
+        },
+        sqli: {
+          DEFAULT: "#7c3aed",
+          soft: "#ede9fe",
+        },
         gold: "#d97706",
       },
       fontFamily: {

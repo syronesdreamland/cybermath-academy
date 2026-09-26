@@ -67,6 +67,8 @@ body {
 .ring-fg--cyber { stroke: #0f766e; }
 .ring-fg--math { stroke: #4338ca; }
 .ring-fg--pentest { stroke: #b45309; }
+.ring-fg--aws { stroke: #c2410c; }
+.ring-fg--sqli { stroke: #7c3aed; }
 
 /* checkbox range selection highlight */
 .check-item.is-selected {
@@ -98,6 +100,8 @@ body {
 .pill--cyber svg { color: #0f766e; }
 .pill--math svg { color: #4338ca; }
 .pill--pentest svg { color: #b45309; }
+.pill--aws svg { color: #c2410c; }
+.pill--sqli svg { color: #7c3aed; }
 
 .eyebrow {
   display: inline-block;
@@ -142,6 +146,8 @@ body {
 .track-icon--cyber { background: #ccfbf1; color: #0f766e; }
 .track-icon--math { background: #e0e7ff; color: #4338ca; }
 .track-icon--pentest { background: #fef3c7; color: #b45309; }
+.track-icon--aws { background: #ffedd5; color: #c2410c; }
+.track-icon--sqli { background: #ede9fe; color: #7c3aed; }
 .track-body { flex: 1; min-width: 0; }
 .track-label {
   font-size: 11px;
@@ -188,6 +194,8 @@ body {
 .node--cyber { border-left: 4px solid #0f766e; }
 .node--math { border-left: 4px solid #4338ca; }
 .node--pentest { border-left: 4px solid #b45309; }
+.node--aws { border-left: 4px solid #c2410c; }
+.node--sqli { border-left: 4px solid #7c3aed; }
 
 /* checklist item */
 .check-item {

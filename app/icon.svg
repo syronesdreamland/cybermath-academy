@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34d399"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <!-- shield outline (security) -->
+  <path d="M32 10 L48 17 V31 C48 43 41 51 32 56 C23 51 16 43 16 31 V17 Z" fill="none" stroke="url(#accent)" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- sigma / math summation symbol -->
+  <path d="M23 26 L29 32 L23 38" fill="none" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M41 26 L35 32 L41 38" fill="none" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="29" y1="32" x2="35" y2="32" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

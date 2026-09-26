@@ -2,8 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ShieldCheck, Sigma, Crosshair, ArrowRight } from "lucide-react";
-import { CYBER_PHASES, MATH_PHASES, PENTEST_PHASES } from "@/lib/data";
+import { ShieldCheck, Sigma, Crosshair, Cloud, Bug, ArrowRight } from "lucide-react";
+import {
+  CYBER_PHASES,
+  MATH_PHASES,
+  PENTEST_PHASES,
+  AWS_PHASES,
+  SQLI_PHASES,
+} from "@/lib/data";
 import {
   loadProgress,
   categoryProgress,
@@ -20,6 +26,8 @@ export default function Home() {
   const cyber = categoryProgress(state, "cyber", CYBER_PHASES);
   const math = categoryProgress(state, "math", MATH_PHASES);
   const pentest = categoryProgress(state, "pentest", PENTEST_PHASES);
+  const aws = categoryProgress(state, "aws", AWS_PHASES);
+  const sqli = categoryProgress(state, "sqli", SQLI_PHASES);
 
   return (
     <main className="min-h-screen flex flex-col">
@@ -47,6 +55,12 @@ export default function Home() {
             <span className="pill pill--pentest">
               <Crosshair size={14} /> <b>{pentest.pct}%</b>
             </span>
+            <span className="pill pill--aws">
+              <Cloud size={14} /> <b>{aws.pct}%</b>
+            </span>
+            <span className="pill pill--sqli">
+              <Bug size={14} /> <b>{sqli.pct}%</b>
+            </span>
           </div>
         </div>
       </header>
@@ -57,18 +71,18 @@ export default function Home() {
           <div className="flex flex-col items-center text-center">
             <span className="eyebrow hero-in hero-in-1">Self-paced curriculum</span>
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.05] mt-4 hero-in hero-in-2">
-              Dua jalur belajar,
+              Lima jalur belajar,
               <br />
               <span className="text-gradient">satu tracker</span> yang rapi.
             </h1>
             <p className="mt-5 text-soft max-w-xl text-base sm:text-lg hero-in hero-in-3">
-              Lacak progres Cybersecurity, Matematika, dan Penetration Testing.
-              Setiap video &amp; materi jadi ceklis interaktif yang tersimpan di
-              perangkat Anda.
+              Lacak progres Cybersecurity, Matematika, Penetration Testing, AWS,
+              dan lab PortSwigger. Setiap materi jadi ceklis interaktif yang
+              tersimpan di perangkat Anda.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-5 max-w-3xl mx-auto mt-12 hero-in hero-in-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto mt-12 hero-in hero-in-4">
             <Link href="/cyber" className="track-card group">
               <div className="track-icon track-icon--cyber">
                 <ShieldCheck size={28} />
@@ -112,6 +126,40 @@ export default function Home() {
                 <div className="track-title">Problem-First Path</div>
                 <div className="track-meta">
                   {pentest.done}/{pentest.total} · {pentest.pct}%
+                </div>
+              </div>
+              <ArrowRight
+                size={20}
+                className="text-muted group-hover:text-ink group-hover:translate-x-1 transition"
+              />
+            </Link>
+
+            <Link href="/aws" className="track-card group">
+              <div className="track-icon track-icon--aws">
+                <Cloud size={28} />
+              </div>
+              <div className="track-body">
+                <div className="track-label">AWS Cloud ☁️</div>
+                <div className="track-title">Dicoding — Dasar Cloud &amp; Gen AI</div>
+                <div className="track-meta">
+                  {aws.done}/{aws.total} · {aws.pct}%
+                </div>
+              </div>
+              <ArrowRight
+                size={20}
+                className="text-muted group-hover:text-ink group-hover:translate-x-1 transition"
+              />
+            </Link>
+
+            <Link href="/sqli" className="track-card group">
+              <div className="track-icon track-icon--sqli">
+                <Bug size={28} />
+              </div>
+              <div className="track-body">
+                <div className="track-label">Web Security</div>
+                <div className="track-title">PortSwigger — SQL Injection</div>
+                <div className="track-meta">
+                  {sqli.done}/{sqli.total} · {sqli.pct}%
                 </div>
               </div>
               <ArrowRight
