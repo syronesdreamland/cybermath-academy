@@ -8,22 +8,29 @@ import {
   Upload,
   Github,
   Youtube,
+  Lock,
 } from "lucide-react";
 import { type Phase, type TrackItem } from "@/lib/data";
 import {
   loadProgress,
   saveProgress,
   isDone,
+  categoryProgress,
   type ProgressMap,
 } from "@/lib/storage";
 
 type TrackViewProps = {
   category: string;
   phases: Phase[];
-  accent: "cyber" | "math" | "pentest" | "aws" | "sqli" | "auth" | "acl" | "xss";
+  accent: "cyber" | "math" | "pentest" | "aws" | "sqli" | "auth" | "acl" | "xss" | "ml" | "mlp";
   sourceLabel: string;
   sourceUrl: string;
   sourceIcon?: "github" | "youtube" | "dicoding";
+  /** Kategori prasyarat: track terkunci sampai prasyarat 100% */
+  requiresCategory?: string;
+  requiresPhases?: { id: string; items: unknown[] }[];
+  requiresLabel?: string;
+  requiresHref?: string;
 };
 
 export type Accent =
@@ -34,7 +41,9 @@ export type Accent =
   | "sqli"
   | "auth"
   | "acl"
-  | "xss";
+  | "xss"
+  | "ml"
+  | "mlp";
 
 const CAT_META: Record<string, { label: string; title: string }> = {
   cyber: { label: "Cybersecurity", title: "90-Day Study Plan" },
@@ -45,6 +54,8 @@ const CAT_META: Record<string, { label: string; title: string }> = {
   auth: { label: "Web Security", title: "PortSwigger — Authentication" },
   acl: { label: "Web Security", title: "PortSwigger — Access Control" },
   xss: { label: "Web Security", title: "PortSwigger — Cross-Site Scripting" },
+  ml: { label: "Machine Learning", title: "Belajar ML untuk Pemula — Dicoding" },
+  mlp: { label: "Machine Learning", title: "ML Practice — Kaggle Learn" },
 };
 
 function pct(done: number, total: number) {
@@ -99,6 +110,10 @@ export default function TrackView({
   sourceLabel,
   sourceUrl,
   sourceIcon = "github",
+  requiresCategory,
+  requiresPhases,
+  requiresLabel,
+  requiresHref,
 }: TrackViewProps) {
   const [state, setState] = useState<ProgressMap>({});
   const [openPhase, setOpenPhase] = useState<string | null>(null);
@@ -107,6 +122,12 @@ export default function TrackView({
   useEffect(() => {
     setState(loadProgress());
   }, []);
+
+  // Prasyarat linear: track terkunci sampai kategori prasyarat 100% selesai
+  const prereqPct = requiresCategory && requiresPhases
+    ? categoryProgress(state, requiresCategory, requiresPhases).pct
+    : 100;
+  const gated = prereqPct < 100;
 
   const totalItems = useMemo(
     () => phases.reduce((a, p) => a + p.items.length, 0),
@@ -202,7 +223,25 @@ export default function TrackView({
 
       {/* graph nodes */}
       <div className="flex flex-wrap gap-3 mb-4">
-        {phases.map((p, idx) => {
+        {gated ? (
+          <div className="w-full bg-white border border-line rounded-2xl shadow-card p-8 text-center">
+            <Lock size={32} className="mx-auto text-muted" />
+            <p className="mt-3 font-bold text-lg">🔒 Track terkunci</p>
+            <p className="mt-1 text-soft text-sm max-w-md mx-auto">
+              Selesaikan dulu <b>{requiresLabel}</b> sampai 100% sebelum masuk
+              track ini. Urutan belajar dibuat linear:{" "}
+              {requiresHref && (
+                <a href={requiresHref} className="text-cyber font-semibold underline">
+                  lanjutkan track sebelumnya →
+                </a>
+              )}
+            </p>
+            <p className="mt-2 text-xs text-muted">
+              Progres prasyarat: {prereqPct}%
+            </p>
+          </div>
+        ) : (
+          phases.map((p, idx) => {
           const done = phaseDone(p);
           const total = p.items.length;
           const stateCls =
@@ -231,11 +270,12 @@ export default function TrackView({
               />
             </button>
           );
-        })}
+          })
+        )}
       </div>
 
       {/* accordion detail */}
-      {openPhase && (
+      {openPhase && !gated && (
         <PhasePanel
           key={openPhase}
           phase={phases.find((p) => p.id === openPhase)!}

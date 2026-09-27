@@ -11,6 +11,8 @@ import {
   KeyRound,
   Lock,
   FlaskConical,
+  BrainCircuit,
+  Dumbbell,
   ArrowRight,
 } from "lucide-react";
 import {
@@ -22,6 +24,8 @@ import {
   AUTH_PHASES,
   ACL_PHASES,
   XSS_PHASES,
+  DICODING_ML_PHASES,
+  MLP_PHASES,
 } from "@/lib/data";
 import {
   loadProgress,
@@ -44,6 +48,8 @@ export default function Home() {
   const auth = categoryProgress(state, "auth", AUTH_PHASES);
   const acl = categoryProgress(state, "acl", ACL_PHASES);
   const xss = categoryProgress(state, "xss", XSS_PHASES);
+  const ml = categoryProgress(state, "ml", DICODING_ML_PHASES);
+  const mlp = categoryProgress(state, "mlp", MLP_PHASES);
 
   const cards: Array<{
     href: string;
@@ -61,6 +67,8 @@ export default function Home() {
     { href: "/auth", icon: <KeyRound size={28} />, accent: "auth", label: "Web Security", title: "PortSwigger — Authentication", meta: auth },
     { href: "/acl", icon: <Lock size={28} />, accent: "acl", label: "Web Security", title: "PortSwigger — Access Control", meta: acl },
     { href: "/xss", icon: <FlaskConical size={28} />, accent: "xss", label: "Web Security", title: "PortSwigger — Cross-Site Scripting", meta: xss },
+    { href: "/ml", icon: <BrainCircuit size={28} />, accent: "ml", label: "Machine Learning 🤖", title: "Dicoding — ML untuk Pemula", meta: ml },
+    { href: "/mlp", icon: <Dumbbell size={28} />, accent: "mlp", label: "Machine Learning", title: "Practice — Kaggle Learn", meta: mlp },
   ];
 
   return (
@@ -92,8 +100,8 @@ export default function Home() {
             <span className="pill pill--aws">
               <Cloud size={14} /> <b>{aws.pct}%</b>
             </span>
-            <span className="pill pill--sqli">
-              <Bug size={14} /> <b>{sqli.pct}%</b>
+            <span className="pill pill--ml">
+              <BrainCircuit size={14} /> <b>{ml.pct}%</b>
             </span>
           </div>
         </div>
@@ -105,15 +113,16 @@ export default function Home() {
           <div className="flex flex-col items-center text-center">
             <span className="eyebrow hero-in hero-in-1">Self-paced curriculum</span>
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.05] mt-4 hero-in hero-in-2">
-              Delapan jalur belajar,
+              Sepuluh jalur belajar,
               <br />
               <span className="text-gradient">satu tracker</span> yang rapi.
             </h1>
             <p className="mt-5 text-soft max-w-xl text-base sm:text-lg hero-in hero-in-3">
               Lacak progres Cybersecurity, Matematika, Penetration Testing, AWS,
-              dan lab PortSwigger (SQL Injection, Authentication, Access
-              Control, XSS). Setiap materi jadi ceklis interaktif yang
-              tersimpan di perangkat Anda.
+              Machine Learning (Dicoding &amp; Kaggle), dan lab PortSwigger
+              (SQL Injection, Authentication, Access Control, XSS). Track
+              PortSwigger dibuat linear — selesaikan urutannya. Setiap materi
+              jadi ceklis interaktif yang tersimpan di perangkat Anda.
             </p>
           </div>
 

@@ -44,6 +44,14 @@ module.exports = {
           DEFAULT: "#be123c",
           soft: "#ffe4e6",
         },
+        ml: {
+          DEFAULT: "#0e7490",
+          soft: "#e0f2fe",
+        },
+        mlp: {
+          DEFAULT: "#4d7c0f",
+          soft: "#ecfccb",
+        },
         gold: "#d97706",
       },
       fontFamily: {
