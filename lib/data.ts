@@ -1026,3 +1026,110 @@ export const SQLI_PHASES: Phase[] = [
     ],
   },
 ];
+
+export const AUTH_PHASES: Phase[] = [
+  {
+    id: "auth-fondasi",
+    name: "Fase A — Fondasi Authentication",
+    icon: "📖",
+    desc: "Cara kerja autentikasi web, kelemahan umum password-based login, dan setup Burp Suite.",
+    items: [
+      { type: "resource", label: "Authentication — PortSwigger Academy", url: "https://portswigger.net/web-security/authentication", sub: "materi" },
+      { type: "task", label: "Pahami mekanisme login: session cookie, brute-force, enumerasi", url: null, sub: "task" },
+      { type: "task", label: "Setup Burp Suite Community + browser proxy", url: null, sub: "task" },
+    ],
+  },
+  {
+    id: "auth-lab-dasar",
+    name: "Fase B — Lab Usernames & Passwords",
+    icon: "🧪",
+    desc: "Lab khusus enumerasi username dan serangan password-based login (Apprentice-Practitioner).",
+    items: [
+      { type: "resource", label: "Lab: Username enumeration via different responses", url: "https://portswigger.net/web-security/authentication/auth-lab-usernames", sub: "lab" },
+      { type: "task", label: "Solve: username enumeration lab", url: null, sub: "task" },
+      { type: "resource", label: "Lab: Password brute-force (passwords lab)", url: "https://portswigger.net/web-security/authentication/auth-lab-passwords", sub: "lab" },
+      { type: "task", label: "Solve: password-based login lab", url: null, sub: "task" },
+      { type: "task", label: "Tulis catatan payload + response pembeda tiap lab", url: null, sub: "task" },
+    ],
+  },
+  {
+    id: "auth-lanjut",
+    name: "Fase C — Stay-Logged-In & Password Reset",
+    icon: "🎯",
+    desc: "Serangan terhadap mekanisme remember-me dan alur reset password yang logikanya lemah.",
+    items: [
+      { type: "resource", label: "Materi: Brute-forcing a stay-logged-in cookie", url: "https://portswigger.net/web-security/authentication/other-mechanisms/lab-brute-forcing-a-stay-logged-in-cookie", sub: "materi" },
+      { type: "resource", label: "Lab: Brute-forcing a stay-logged-in cookie", url: "https://portswigger.net/web-security/authentication/other-mechanisms/lab-brute-forcing-a-stay-logged-in-cookie", sub: "lab" },
+      { type: "task", label: "Solve: stay-logged-in cookie lab", url: null, sub: "task" },
+      { type: "resource", label: "Lab: Password reset broken logic", url: "https://portswigger.net/web-security/authentication/other-mechanisms/lab-password-reset-broken-logic", sub: "lab" },
+      { type: "task", label: "Solve: password reset broken logic lab", url: null, sub: "task" },
+    ],
+  },
+];
+
+export const ACL_PHASES: Phase[] = [
+  {
+    id: "acl-fondasi",
+    name: "Fase A — Fondasi Access Control",
+    icon: "📖",
+    desc: "Vertical vs horizontal privilege escalation, dan kenapa IDOR jadi bug paling umum di bug bounty.",
+    items: [
+      { type: "resource", label: "Access control vulnerabilities (IDOR) — PortSwigger Academy", url: "https://portswigger.net/web-security/access-control", sub: "materi" },
+      { type: "task", label: "Pahami perbedaan vertical vs horizontal escalation", url: null, sub: "task" },
+    ],
+  },
+  {
+    id: "acl-lab",
+    name: "Fase B — Lab Escalation (Apprentice)",
+    icon: "🧪",
+    desc: "Empat lab inti: admin tersembunyi, role via parameter, IDOR, dan URL-based bypass.",
+    items: [
+      { type: "resource", label: "Lab: Unprotected admin functionality", url: "https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality", sub: "lab" },
+      { type: "task", label: "Solve: unprotected admin lab", url: null, sub: "task" },
+      { type: "resource", label: "Lab: User role controlled by request parameter", url: "https://portswigger.net/web-security/access-control/lab-user-role-controlled-by-request-parameter", sub: "lab" },
+      { type: "task", label: "Solve: role via request parameter lab", url: null, sub: "task" },
+      { type: "resource", label: "Lab: User ID controlled by request parameter (IDOR)", url: "https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter", sub: "lab" },
+      { type: "task", label: "Solve: IDOR lab", url: null, sub: "task" },
+      { type: "resource", label: "Lab: URL-based access control can be circumvented", url: "https://portswigger.net/web-security/access-control/lab-url-based-access-control-can-be-circumvented", sub: "lab" },
+      { type: "task", label: "Solve: URL-based bypass lab + catat payload", url: null, sub: "task" },
+    ],
+  },
+];
+
+export const XSS_PHASES: Phase[] = [
+  {
+    id: "xss-fondasi",
+    name: "Fase A — Fondasi XSS",
+    icon: "📖",
+    desc: "Reflected vs Stored vs DOM-based XSS, context injeksi, dan exfiltration via Burp Collaborator.",
+    items: [
+      { type: "resource", label: "Cross-site scripting — PortSwigger Academy", url: "https://portswigger.net/web-security/cross-site-scripting", sub: "materi" },
+      { type: "task", label: "Pahami 3 tipe XSS + HTML/JS/attribute context", url: null, sub: "task" },
+    ],
+  },
+  {
+    id: "xss-lab-dasar",
+    name: "Fase B — Lab Reflected & Stored",
+    icon: "🧪",
+    desc: "Dua lab Apprentice pertama: injeksi HTML context tanpa encoding.",
+    items: [
+      { type: "resource", label: "Lab: Reflected XSS into HTML context with nothing encoded", url: "https://portswigger.net/web-security/cross-site-scripting/reflected/lab-html-context-nothing-encoded", sub: "lab" },
+      { type: "task", label: "Solve: reflected XSS lab", url: null, sub: "task" },
+      { type: "resource", label: "Lab: Stored XSS into HTML context with nothing encoded", url: "https://portswigger.net/web-security/cross-site-scripting/stored/lab-html-context-nothing-encoded", sub: "lab" },
+      { type: "task", label: "Solve: stored XSS lab", url: null, sub: "task" },
+      { type: "task", label: "Tulis catatan payload + di context mana ia bekerja", url: null, sub: "task" },
+    ],
+  },
+  {
+    id: "xss-dom",
+    name: "Fase C — Lab DOM-based",
+    icon: "🎯",
+    desc: "Sink berbahaya document.write dan jQuery — client-side XSS tanpa response server.",
+    items: [
+      { type: "resource", label: "Lab: DOM XSS in document.write sink using location.search", url: "https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-document-write-sink", sub: "lab" },
+      { type: "task", label: "Solve: document.write sink lab", url: null, sub: "task" },
+      { type: "resource", label: "Lab: DOM XSS in jQuery selector sink using a hash-change event", url: "https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-jquery-selector-hash-change-event", sub: "lab" },
+      { type: "task", label: "Solve: jQuery selector sink lab", url: null, sub: "task" },
+    ],
+  },
+];

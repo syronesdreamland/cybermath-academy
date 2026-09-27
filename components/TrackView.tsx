@@ -20,13 +20,21 @@ import {
 type TrackViewProps = {
   category: string;
   phases: Phase[];
-  accent: "cyber" | "math" | "pentest" | "aws" | "sqli";
+  accent: "cyber" | "math" | "pentest" | "aws" | "sqli" | "auth" | "acl" | "xss";
   sourceLabel: string;
   sourceUrl: string;
   sourceIcon?: "github" | "youtube" | "dicoding";
 };
 
-export type Accent = "cyber" | "math" | "pentest" | "aws" | "sqli";
+export type Accent =
+  | "cyber"
+  | "math"
+  | "pentest"
+  | "aws"
+  | "sqli"
+  | "auth"
+  | "acl"
+  | "xss";
 
 const CAT_META: Record<string, { label: string; title: string }> = {
   cyber: { label: "Cybersecurity", title: "90-Day Study Plan" },
@@ -34,6 +42,9 @@ const CAT_META: Record<string, { label: string; title: string }> = {
   pentest: { label: "Penetration Testing", title: "Problem-First Path" },
   aws: { label: "AWS Cloud", title: "Dasar Cloud & Gen AI — Dicoding" },
   sqli: { label: "Web Security", title: "PortSwigger — SQL Injection" },
+  auth: { label: "Web Security", title: "PortSwigger — Authentication" },
+  acl: { label: "Web Security", title: "PortSwigger — Access Control" },
+  xss: { label: "Web Security", title: "PortSwigger — Cross-Site Scripting" },
 };
 
 function pct(done: number, total: number) {

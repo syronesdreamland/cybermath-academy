@@ -32,6 +32,18 @@ module.exports = {
           DEFAULT: "#7c3aed",
           soft: "#ede9fe",
         },
+        auth: {
+          DEFAULT: "#0891b2",
+          soft: "#cffafe",
+        },
+        acl: {
+          DEFAULT: "#059669",
+          soft: "#d1fae5",
+        },
+        xss: {
+          DEFAULT: "#be123c",
+          soft: "#ffe4e6",
+        },
         gold: "#d97706",
       },
       fontFamily: {

@@ -69,6 +69,9 @@ body {
 .ring-fg--pentest { stroke: #b45309; }
 .ring-fg--aws { stroke: #c2410c; }
 .ring-fg--sqli { stroke: #7c3aed; }
+.ring-fg--auth { stroke: #0891b2; }
+.ring-fg--acl { stroke: #059669; }
+.ring-fg--xss { stroke: #be123c; }
 
 /* checkbox range selection highlight */
 .check-item.is-selected {
@@ -102,6 +105,9 @@ body {
 .pill--pentest svg { color: #b45309; }
 .pill--aws svg { color: #c2410c; }
 .pill--sqli svg { color: #7c3aed; }
+.pill--auth svg { color: #0891b2; }
+.pill--acl svg { color: #059669; }
+.pill--xss svg { color: #be123c; }
 
 .eyebrow {
   display: inline-block;
@@ -148,6 +154,9 @@ body {
 .track-icon--pentest { background: #fef3c7; color: #b45309; }
 .track-icon--aws { background: #ffedd5; color: #c2410c; }
 .track-icon--sqli { background: #ede9fe; color: #7c3aed; }
+.track-icon--auth { background: #cffafe; color: #0891b2; }
+.track-icon--acl { background: #d1fae5; color: #059669; }
+.track-icon--xss { background: #ffe4e6; color: #be123c; }
 .track-body { flex: 1; min-width: 0; }
 .track-label {
   font-size: 11px;
@@ -196,6 +205,9 @@ body {
 .node--pentest { border-left: 4px solid #b45309; }
 .node--aws { border-left: 4px solid #c2410c; }
 .node--sqli { border-left: 4px solid #7c3aed; }
+.node--auth { border-left: 4px solid #0891b2; }
+.node--acl { border-left: 4px solid #059669; }
+.node--xss { border-left: 4px solid #be123c; }
 
 /* checklist item */
 .check-item {

@@ -1,14 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { ShieldCheck, Sigma, Crosshair, Cloud, Bug, ArrowRight } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
+import {
+  ShieldCheck,
+  Sigma,
+  Crosshair,
+  Cloud,
+  Bug,
+  KeyRound,
+  Lock,
+  FlaskConical,
+  ArrowRight,
+} from "lucide-react";
 import {
   CYBER_PHASES,
   MATH_PHASES,
   PENTEST_PHASES,
   AWS_PHASES,
   SQLI_PHASES,
+  AUTH_PHASES,
+  ACL_PHASES,
+  XSS_PHASES,
 } from "@/lib/data";
 import {
   loadProgress,
@@ -28,6 +41,27 @@ export default function Home() {
   const pentest = categoryProgress(state, "pentest", PENTEST_PHASES);
   const aws = categoryProgress(state, "aws", AWS_PHASES);
   const sqli = categoryProgress(state, "sqli", SQLI_PHASES);
+  const auth = categoryProgress(state, "auth", AUTH_PHASES);
+  const acl = categoryProgress(state, "acl", ACL_PHASES);
+  const xss = categoryProgress(state, "xss", XSS_PHASES);
+
+  const cards: Array<{
+    href: string;
+    icon: ReactNode;
+    accent: string;
+    label: string;
+    title: string;
+    meta: { done: number; total: number; pct: number };
+  }> = [
+    { href: "/cyber", icon: <ShieldCheck size={28} />, accent: "cyber", label: "Cybersecurity", title: "90-Day Plan", meta: cyber },
+    { href: "/math", icon: <Sigma size={28} />, accent: "math", label: "Mathematics", title: "Professor Dave", meta: math },
+    { href: "/pentest", icon: <Crosshair size={28} />, accent: "pentest", label: "Pentest", title: "Problem-First Path", meta: pentest },
+    { href: "/aws", icon: <Cloud size={28} />, accent: "aws", label: "AWS Cloud ☁️", title: "Dicoding — Dasar Cloud & Gen AI", meta: aws },
+    { href: "/sqli", icon: <Bug size={28} />, accent: "sqli", label: "Web Security", title: "PortSwigger — SQL Injection", meta: sqli },
+    { href: "/auth", icon: <KeyRound size={28} />, accent: "auth", label: "Web Security", title: "PortSwigger — Authentication", meta: auth },
+    { href: "/acl", icon: <Lock size={28} />, accent: "acl", label: "Web Security", title: "PortSwigger — Access Control", meta: acl },
+    { href: "/xss", icon: <FlaskConical size={28} />, accent: "xss", label: "Web Security", title: "PortSwigger — Cross-Site Scripting", meta: xss },
+  ];
 
   return (
     <main className="min-h-screen flex flex-col">
@@ -45,7 +79,7 @@ export default function Home() {
               <div className="text-xs text-muted">Structured Learning Tracker</div>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 overflow-x-auto">
             <span className="pill pill--cyber">
               <ShieldCheck size={14} /> <b>{cyber.pct}%</b>
             </span>
@@ -71,102 +105,35 @@ export default function Home() {
           <div className="flex flex-col items-center text-center">
             <span className="eyebrow hero-in hero-in-1">Self-paced curriculum</span>
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.05] mt-4 hero-in hero-in-2">
-              Lima jalur belajar,
+              Delapan jalur belajar,
               <br />
               <span className="text-gradient">satu tracker</span> yang rapi.
             </h1>
             <p className="mt-5 text-soft max-w-xl text-base sm:text-lg hero-in hero-in-3">
               Lacak progres Cybersecurity, Matematika, Penetration Testing, AWS,
-              dan lab PortSwigger. Setiap materi jadi ceklis interaktif yang
+              dan lab PortSwigger (SQL Injection, Authentication, Access
+              Control, XSS). Setiap materi jadi ceklis interaktif yang
               tersimpan di perangkat Anda.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto mt-12 hero-in hero-in-4">
-            <Link href="/cyber" className="track-card group">
-              <div className="track-icon track-icon--cyber">
-                <ShieldCheck size={28} />
-              </div>
-              <div className="track-body">
-                <div className="track-label">Cybersecurity</div>
-                <div className="track-title">90-Day Plan</div>
-                <div className="track-meta">
-                  {cyber.done}/{cyber.total} · {cyber.pct}%
+            {cards.map((c) => (
+              <Link key={c.href} href={c.href} className="track-card group">
+                <div className={`track-icon track-icon--${c.accent}`}>{c.icon}</div>
+                <div className="track-body">
+                  <div className="track-label">{c.label}</div>
+                  <div className="track-title">{c.title}</div>
+                  <div className="track-meta">
+                    {c.meta.done}/{c.meta.total} · {c.meta.pct}%
+                  </div>
                 </div>
-              </div>
-              <ArrowRight
-                size={20}
-                className="text-muted group-hover:text-ink group-hover:translate-x-1 transition"
-              />
-            </Link>
-
-            <Link href="/math" className="track-card group">
-              <div className="track-icon track-icon--math">
-                <Sigma size={28} />
-              </div>
-              <div className="track-body">
-                <div className="track-label">Mathematics</div>
-                <div className="track-title">Professor Dave</div>
-                <div className="track-meta">
-                  {math.done}/{math.total} · {math.pct}%
-                </div>
-              </div>
-              <ArrowRight
-                size={20}
-                className="text-muted group-hover:text-ink group-hover:translate-x-1 transition"
-              />
-            </Link>
-
-            <Link href="/pentest" className="track-card group">
-              <div className="track-icon track-icon--pentest">
-                <Crosshair size={28} />
-              </div>
-              <div className="track-body">
-                <div className="track-label">Pentest</div>
-                <div className="track-title">Problem-First Path</div>
-                <div className="track-meta">
-                  {pentest.done}/{pentest.total} · {pentest.pct}%
-                </div>
-              </div>
-              <ArrowRight
-                size={20}
-                className="text-muted group-hover:text-ink group-hover:translate-x-1 transition"
-              />
-            </Link>
-
-            <Link href="/aws" className="track-card group">
-              <div className="track-icon track-icon--aws">
-                <Cloud size={28} />
-              </div>
-              <div className="track-body">
-                <div className="track-label">AWS Cloud ☁️</div>
-                <div className="track-title">Dicoding — Dasar Cloud &amp; Gen AI</div>
-                <div className="track-meta">
-                  {aws.done}/{aws.total} · {aws.pct}%
-                </div>
-              </div>
-              <ArrowRight
-                size={20}
-                className="text-muted group-hover:text-ink group-hover:translate-x-1 transition"
-              />
-            </Link>
-
-            <Link href="/sqli" className="track-card group">
-              <div className="track-icon track-icon--sqli">
-                <Bug size={28} />
-              </div>
-              <div className="track-body">
-                <div className="track-label">Web Security</div>
-                <div className="track-title">PortSwigger — SQL Injection</div>
-                <div className="track-meta">
-                  {sqli.done}/{sqli.total} · {sqli.pct}%
-                </div>
-              </div>
-              <ArrowRight
-                size={20}
-                className="text-muted group-hover:text-ink group-hover:translate-x-1 transition"
-              />
-            </Link>
+                <ArrowRight
+                  size={20}
+                  className="text-muted group-hover:text-ink group-hover:translate-x-1 transition"
+                />
+              </Link>
+            ))}
           </div>
 
           <p className="text-center text-muted text-sm mt-10 hero-in hero-in-4">
