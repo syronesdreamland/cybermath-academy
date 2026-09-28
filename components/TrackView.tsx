@@ -192,6 +192,12 @@ export default function TrackView({
 
   return (
     <div className="max-w-5xl mx-auto px-5 py-8">
+      {/* back link — kiri atas */}
+      <div className="mb-3">
+        <a href="/" className="font-semibold text-soft hover:text-ink text-sm inline-flex items-center gap-1">
+          ← Pilih jalur
+        </a>
+      </div>
       {/* head */}
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
         <div>
@@ -294,11 +300,7 @@ export default function TrackView({
       )}
 
       {/* footer */}
-      <div className="flex items-center justify-between mt-8 pt-4 border-t border-line">
-        <a href="/" className="font-semibold text-soft hover:text-ink">
-          ← Pilih jalur
-        </a>
-      </div>
+      <div className="mt-8 pt-4 border-t border-line" />
     </div>
   );
 }
