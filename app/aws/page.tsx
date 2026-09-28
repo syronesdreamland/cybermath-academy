@@ -9,8 +9,8 @@ export default function AwsPage() {
       category="aws"
       phases={AWS_PHASES}
       accent="aws"
-      sourceLabel="Dicoding — Belajar Dasar Cloud dan Gen AI di AWS"
-      sourceUrl="https://www.dicoding.com/academies/251"
+      sourceLabel="Belajar Dasar Cloud & Gen AI di AWS"
+      sourceUrl="/aws"
       sourceIcon="github"
     />
   );

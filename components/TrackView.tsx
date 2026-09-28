@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import {
   ChevronDown,
   ExternalLink,
@@ -9,8 +10,10 @@ import {
   Github,
   Youtube,
   Lock,
+  BookOpen,
 } from "lucide-react";
 import { type Phase, type TrackItem } from "@/lib/data";
+import { getLessonByTid } from "@/lib/lessons";
 import {
   loadProgress,
   saveProgress,
@@ -320,6 +323,14 @@ function PhasePanel({
   const items = phase.items;
   const total = items.length;
 
+// Ambil id tutorial dari URL sumber untuk dicocokkan ke lesson internal
+const TID_RE = /tutorials\/(\d+)/;
+function internalLesson(item: TrackItem) {
+  if (!item.url) return null;
+  const m = item.url.match(TID_RE);
+  return m ? getLessonByTid(m[1]) ?? null : null;
+}
+
   const renderList = (list: TrackItem[], offset: number) => (
     <ul className="flex flex-col gap-1.5">
       {list.map((it, i) => {
@@ -327,12 +338,13 @@ function PhasePanel({
         const done = isDone(globalIdx);
         const typeIcon =
           it.type === "video" ? "🎬" : it.type === "resource" ? "🔗" : "✅";
+        const lesson = internalLesson(it);
         return (
           <li
             key={globalIdx}
             className={`check-item ${done ? "is-done" : ""}`}
             onClick={(e) => {
-              if ((e.target as HTMLElement).tagName === "A") return;
+              if ((e.target as HTMLElement).closest("a")) return;
               onCheck(phase.id, globalIdx, !done, e as unknown as React.MouseEvent);
             }}
           >
@@ -347,7 +359,18 @@ function PhasePanel({
             <span aria-hidden="true">{typeIcon}</span>
             <div className="check-body">
               <span className="check-label">{it.label}</span>
-              {it.url && (
+              {lesson ? (
+                <>
+                  {" "}
+                  <Link
+                    className="check-link"
+                    href={`/lesson/${lesson.slug}`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <BookOpen size={12} className="inline -mt-0.5" /> baca
+                  </Link>
+                </>
+              ) : it.url ? (
                 <>
                   {" "}
                   <a
@@ -360,7 +383,7 @@ function PhasePanel({
                     <ExternalLink size={12} className="inline -mt-0.5" /> buka
                   </a>
                 </>
-              )}
+              ) : null}
             </div>
           </li>
         );
