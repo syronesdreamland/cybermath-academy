@@ -1,5 +1,7 @@
 "use client";
 
+import { queuePushProgress } from "./sync";
+
 const STORE_KEY = "cyberMathProgress.v2";
 
 export type ProgressMap = Record<string, Record<string, Record<string, boolean>>>;
@@ -19,6 +21,8 @@ export function saveProgress(state: ProgressMap) {
   if (typeof window === "undefined") return;
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    // Sync cloud (no-op bila belum login / belum dikonfigurasi)
+    queuePushProgress(state);
   } catch {
     /* ignore */
   }

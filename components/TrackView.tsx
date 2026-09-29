@@ -21,6 +21,16 @@ import {
   categoryProgress,
   type ProgressMap,
 } from "@/lib/storage";
+import {
+  pullProgress,
+  mergeProgress,
+  getSyncState,
+  onSyncState,
+  signInWithPassword,
+  signUpWithPassword,
+  signOutSync,
+  type SyncState,
+} from "@/lib/sync";
 
 type TrackViewProps = {
   category: string;
@@ -121,9 +131,19 @@ export default function TrackView({
   const [state, setState] = useState<ProgressMap>({});
   const [openPhase, setOpenPhase] = useState<string | null>(null);
   const [rangeStart, setRangeStart] = useState<string | null>(null);
+  const [sync, setSync] = useState<SyncState>(getSyncState());
 
   useEffect(() => {
     setState(loadProgress());
+    const unsub = onSyncState(setSync);
+    // Pull progress dari cloud saat mount (merge, tanpa pernah un-check item lokal)
+    void (async () => {
+      const remote = await pullProgress();
+      if (remote && Object.keys(remote).length > 0) {
+        setState((prev) => mergeProgress(prev, remote));
+      }
+    })();
+    return unsub;
   }, []);
 
   // Prasyarat linear: track terkunci sampai kategori prasyarat 100% selesai
@@ -154,6 +174,30 @@ export default function TrackView({
       });
     },
     [category]
+  );
+
+  // Sign in / daftar sync → setelah sukses, langsung pull + merge ke state
+  const handleSyncSignIn = useCallback(
+    (email: string, password: string, mode: "in" | "up") => {
+      void (async () => {
+        const err =
+          mode === "in" ? await signInWithPassword(email, password) : await signUpWithPassword(email, password);
+        if (err) {
+          alert(`Sync gagal: ${err}`);
+          return;
+        }
+        if (mode === "up") {
+          alert("Akun dibuat. Cek email untuk verifikasi (jika diminta), lalu Masuk.");
+        }
+        const remote = await pullProgress();
+        setState((prev) => {
+          const merged = remote ? mergeProgress(prev, remote) : prev;
+          saveProgress(merged); // dorong hasil merge ke cloud juga
+          return merged;
+        });
+      })();
+    },
+    []
   );
 
   // shift+click range select
@@ -227,6 +271,7 @@ export default function TrackView({
         <div className="flex gap-2">
           <ExportButton state={state} />
           <ImportButton onImport={(s) => { setState(s); saveProgress(s); }} />
+          <SyncButton sync={sync} onSignIn={handleSyncSignIn} onSignOut={signOutSync} />
         </div>
       </div>
 
@@ -483,6 +528,100 @@ function ImportButton({ onImport }: { onImport: (s: ProgressMap) => void }) {
           e.target.value = "";
         }}
       />
+    </>
+  );
+}
+
+// ------------------------------------------------------------
+// Sync cloud: tombol kecil di toolbar — login/logout + status dot.
+// Saat env Supabase belum diset, tombol disembunyikan (tracker tetap berfungsi penuh).
+function SyncButton({
+  sync,
+  onSignIn,
+  onSignOut,
+}: {
+  sync: SyncState;
+  onSignIn: (email: string, password: string, mode: "in" | "up") => void;
+  onSignOut: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [mode, setMode] = useState<"in" | "up">("in");
+  const [busy, setBusy] = useState(false);
+
+  if (!sync.configured && !sync.signedIn) return null;
+
+  const dot =
+    sync.status === "error" ? "🔴" : sync.status === "syncing" ? "🟡" : sync.signedIn ? "🟢" : "⚪️";
+
+  return (
+    <>
+      {sync.signedIn ? (
+        <button
+          className="btn-ghost flex items-center gap-2"
+          title={`Sync aktif: ${sync.email ?? ""}`}
+          onClick={() => {
+            if (confirm(`Logout dari sync (${sync.email ?? "akun"})? Progres tetap aman di device ini.`)) {
+              onSignOut();
+            }
+          }}
+        >
+          <span>{dot}</span> Sync: {sync.email?.split("@")[0]}
+        </button>
+      ) : (
+        <button className="btn-ghost flex items-center gap-2" onClick={() => setOpen((v) => !v)}>
+          <span>{dot}</span> Sync
+        </button>
+      )}
+      {open && !sync.signedIn && (
+        <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-line rounded-2xl shadow-card p-4 z-50">
+          <div className="flex gap-2 mb-3 text-sm font-semibold">
+            <button
+              className={`px-3 py-1 rounded-full ${mode === "in" ? "bg-cyber text-white" : "bg-line"}`}
+              onClick={() => setMode("in")}
+            >
+              Masuk
+            </button>
+            <button
+              className={`px-3 py-1 rounded-full ${mode === "up" ? "bg-cyber text-white" : "bg-line"}`}
+              onClick={() => setMode("up")}
+            >
+              Daftar
+            </button>
+          </div>
+          <input
+            className="w-full border border-line rounded-lg px-3 py-2 text-sm mb-2"
+            placeholder="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            className="w-full border border-line rounded-lg px-3 py-2 text-sm mb-3"
+            placeholder="password (min. 6 karakter)"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            className="btn-ghost w-full justify-center"
+            disabled={busy || !email || !password}
+            onClick={() => {
+              setBusy(true);
+              onSignIn(email, password, mode);
+              setTimeout(() => setBusy(false), 800);
+              setOpen(false);
+            }}
+          >
+            {mode === "in" ? "Masuk & sync" : "Daftar & sync"}
+          </button>
+          <p className="text-[11px] text-muted mt-2 leading-snug">
+            Progres tersimpan di akun & ter-sync ke semua device. Merge aman: item yang sudah
+            dicentang tidak akan hilang.
+          </p>
+        </div>
+      )}
     </>
   );
 }
