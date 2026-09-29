@@ -174,11 +174,25 @@ export default function LessonView({
         </span>
       </div>
 
-      <span className="eyebrow text-[#c2410c]">AWS Cloud — Materi Internal</span>
+      <span className="eyebrow text-[#c2410c]">Materi Internal</span>
       <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mt-1 mb-4 flex items-start gap-3">
         <BookOpen size={30} className="mt-1.5 shrink-0 text-[#c2410c]" />
         {lesson.title}
       </h1>
+      {lesson.source && (
+        <p className="mb-4 text-xs text-muted">
+          📚 Sumber belajar:{" "}
+          <a
+            href={lesson.source.url}
+            target="_blank"
+            rel="noopener"
+            className="font-semibold underline hover:text-ink"
+          >
+            {lesson.source.label}
+          </a>{" "}
+          — materi ini tulisan ulangan internal, bukan salinan sumber.
+        </p>
+      )}
 
       {/* untuk apa */}
       <div className="bg-orange-50 border border-orange-200 rounded-2xl p-5 mb-6">

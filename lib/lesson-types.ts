@@ -28,6 +28,8 @@ export type Lesson = {
   tid: string;
   title: string;
   minutes: number;
+  /** Link sumber belajar (PortSwigger/Kaggle/docs resmi) — materi tetap tulisan ulangan internal */
+  source?: { label: string; url: string };
   untukApa: string[];
   sections: LessonSection[];
   lab?: { title: string; intro?: string; steps: string[]; hint?: string };

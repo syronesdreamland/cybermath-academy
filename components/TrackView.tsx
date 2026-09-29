@@ -13,7 +13,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { type Phase, type TrackItem } from "@/lib/data";
-import { getLessonByTid } from "@/lib/lessons";
+import { getLessonByTid, getLessonBySourceUrl } from "@/lib/lessons";
 import {
   loadProgress,
   saveProgress,
@@ -326,11 +326,14 @@ function PhasePanel({
   const total = items.length;
 
 // Ambil id tutorial dari URL sumber untuk dicocokkan ke lesson internal
+// - Dicoding: tutorials/<tid>
+// - Lainnya (PortSwigger, dll): map eksplisit getLessonBySourceUrl
 const TID_RE = /tutorials\/(\d+)/;
 function internalLesson(item: TrackItem) {
   if (!item.url) return null;
   const m = item.url.match(TID_RE);
-  return m ? getLessonByTid(m[1]) ?? null : null;
+  if (m) return getLessonByTid(m[1]) ?? null;
+  return getLessonBySourceUrl(item.url) ?? null;
 }
 
   const renderList = (list: TrackItem[], offset: number) => (
