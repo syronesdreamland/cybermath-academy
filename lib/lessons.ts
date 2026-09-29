@@ -1,11 +1,12 @@
 import type { Lesson } from "./lesson-types";
 import { AWS_M1 } from "./lessons-aws-1";
 import { SQLI_LESSONS } from "./lessons-sqli";
+import { AUTH_LESSONS } from "./lessons-auth";
 
 export type { Lesson, QuizQ, LessonSection } from "./lesson-types";
 
 /** Semua lesson internal (hasil rewrite). Tambah modul baru di sini. */
-export const ALL_LESSONS: Lesson[] = [...AWS_M1, ...SQLI_LESSONS];
+export const ALL_LESSONS: Lesson[] = [...AWS_M1, ...SQLI_LESSONS, ...AUTH_LESSONS];
 
 const bySlug = new Map<string, Lesson>();
 const byTid = new Map<string, Lesson>();
@@ -22,6 +23,15 @@ const SOURCE_URL_TID: Array<[RegExp, string]> = [
   [/sql-injection\/examining-the-database/, "ps-sqli-examining-db"],
   [/sql-injection\/blind/, "ps-sqli-blind"],
   [/portswigger\.net\/web-security\/sql-injection/, "ps-sqli-main"],
+  // Authentication
+  [/auth-lab-usernames/, "ps-auth-enum-responses"],
+  [/auth-lab-passwords/, "ps-auth-bruteforce-lab"],
+  [/stay-logged-in-cookie/, "ps-auth-stayloggedin"],
+  [/password-reset-broken-logic/, "ps-auth-reset-broken"],
+  [/authentication\/password-based/, "ps-auth-bruteforce"],
+  [/authentication\/other-mechanisms(?!\/lab)/, "ps-auth-stayloggedin"],
+  [/authentication\/securing/, "ps-auth-secure"],
+  [/portswigger\.net\/web-security\/authentication\/?$/, "ps-auth-main"],
 ];
 
 export function getLessonBySourceUrl(url: string): Lesson | undefined {
