@@ -2,11 +2,19 @@ import type { Lesson } from "./lesson-types";
 import { AWS_M1 } from "./lessons-aws-1";
 import { SQLI_LESSONS } from "./lessons-sqli";
 import { AUTH_LESSONS } from "./lessons-auth";
+import { ACL_LESSONS } from "./lessons-acl";
+import { XSS_LESSONS } from "./lessons-xss";
 
 export type { Lesson, QuizQ, LessonSection } from "./lesson-types";
 
 /** Semua lesson internal (hasil rewrite). Tambah modul baru di sini. */
-export const ALL_LESSONS: Lesson[] = [...AWS_M1, ...SQLI_LESSONS, ...AUTH_LESSONS];
+export const ALL_LESSONS: Lesson[] = [
+  ...AWS_M1,
+  ...SQLI_LESSONS,
+  ...AUTH_LESSONS,
+  ...ACL_LESSONS,
+  ...XSS_LESSONS,
+];
 
 const bySlug = new Map<string, Lesson>();
 const byTid = new Map<string, Lesson>();
@@ -32,6 +40,21 @@ const SOURCE_URL_TID: Array<[RegExp, string]> = [
   [/authentication\/other-mechanisms(?!\/lab)/, "ps-auth-stayloggedin"],
   [/authentication\/securing/, "ps-auth-secure"],
   [/portswigger\.net\/web-security\/authentication\/?$/, "ps-auth-main"],
+  // Access control
+  [/lab-unprotected-admin-functionality/, "ps-acl-admin-unprotected"],
+  [/lab-user-role-controlled-by-request-parameter/, "ps-acl-role-param"],
+  [/lab-user-id-controlled-by-request-parameter/, "ps-acl-idor"],
+  [/lab-url-based-access-control-can-be-circumvented/, "ps-acl-url-bypass"],
+  [/portswigger\.net\/web-security\/access-control\/?$/, "ps-acl-main"],
+  // XSS
+  [/reflected\/lab-html-context-nothing-encoded/, "ps-xss-reflected"],
+  [/stored\/lab-html-context-nothing-encoded/, "ps-xss-stored"],
+  [/dom-based\/lab-document-write-sink/, "ps-xss-dom"],
+  [/dom-based\/lab-jquery-selector-hash-change-event/, "ps-xss-jquery"],
+  [/cross-site-scripting\/reflected/, "ps-xss-reflected"],
+  [/cross-site-scripting\/stored/, "ps-xss-stored"],
+  [/cross-site-scripting\/dom-based/, "ps-xss-dom"],
+  [/portswigger\.net\/web-security\/cross-site-scripting\/?$/, "ps-xss-main"],
 ];
 
 export function getLessonBySourceUrl(url: string): Lesson | undefined {
