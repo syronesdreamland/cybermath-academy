@@ -1203,4 +1203,525 @@ export const PYTHON_LESSONS: Lesson[] = [
       },
     ],
   },
+  {
+    slug: "py-14",
+    tid: "4766",
+    title: "Percabangan: if, elif, else",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4766" },
+    untukApa: [
+      "Sampai fase ini programmu robot yang naif: semua baris dieksekusi, titik. Program nyata harus BISA MEMUTUSKAN — 'jika login gagal 5 kali, blokir; jika tidak, biarkan masuk'.",
+      "Percabangan adalah tool keputusan pertamamu. Paham ini + operator relasional/logika dari py-09/py-11 = kamu bisa menulis logika program apa pun.",
+    ],
+    sections: [
+      {
+        h: "if: eksekusi berdasarkan kondisi",
+        p: [
+          "if mengecek sebuah kondisi (ekspresi yang menghasilkan boolean). True = blok di dalamnya dieksekusi; False = dilewati. Ini pemakaian ekspresi relasional yang kamu pelajari di py-09 — sekarang jadi kontrol alur:",
+        ],
+        code: 'score = 100\n\nif score == 100:\n    print("Nilai Anda sempurna!")   # dieksekusi karena True',
+      },
+      {
+        p: [
+          "Bonus dari lesson tipe data: kondisi tidak harus boolean eksplisit. Python mengevaluasi nilai apa pun sebagai truthy/falsy — `if x:` dengan x string kosong akan False, jadi bloknya dilewati.",
+        ],
+      },
+      {
+        h: "else: jalan keluar terakhir",
+        p: [
+          "else menampung kode yang dieksekusi saat kondisi if (dan semua elif) False. Ia opsional dan tidak punya kondisi sendiri — jalan keluar PASTI terpenuhi:",
+        ],
+        code: 'tinggi_badan = 120\n\nif tinggi_badan >= 160:\n    print("Boleh naik roller coaster")\nelse:\n    print("Tidak boleh naik roller coaster")',
+        callout:
+          "Aturan penting: else adalah kondisi TERAKHIR. Kalau punya kondisi ke-2, ke-3, dst — jangan dipaksakan lewat else, gunakan elif.",
+      },
+      {
+        h: "elif: kondisi menengah, bisa banyak",
+        p: [
+          "elif (else if) menyisipkan kondisi tambahan di antara if dan else — jumlahnya tidak dibatasi. Evaluasinya SEKUENSIAL: if dulu, lalu elif satu per satu, sampai yang pertama True; sisanya dilewati termasuk else:",
+        ],
+        code: 'nilai = 65\n\nif nilai >= 80:\n    print("Nilai A")\nelif nilai >= 70:\n    print("Nilai B")\nelif nilai >= 60:\n    print("Nilai C")   # dieksekusi: 65 >= 60\nelse:\n    print("Nilai D")',
+      },
+      {
+        p: [
+          "Perhatikan kecerdasan urutan: nilai 65 gagal di if (80) dan elif pertama (70), sukses di elif kedua (60) — jadi 'C'. Kondisi gabungan juga bisa: `if nilai >= 80 and perilaku == 'baik':`",
+        ],
+      },
+      {
+        h: "Ternary: if-else versi one-liner",
+        p: [
+          "Untuk keputusan yang cukup dipadatkan satu baris, Python punya conditional expression (ternary):",
+        ],
+        code: 'lulus = True\n\nprint("selamat") if lulus else print("perbaiki")\n\n# atau sebagai nilai:\nstatus = "lulus" if lulus else "belum lulus"\nprint(status)   # lulus',
+      },
+      {
+        p: [
+          "Ada juga varian ternary tuple `(nilai_false, nilai_true)[kondisi]` — berfungsi, tapi komunitas Python menganggapnya tidak pythonic karena membingungkan (indeks 0 = False!). Hindari; pakai bentuk standar.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Konverter nilai huruf + login checker",
+      intro: "Dua program keputusan klasik. Tulis dulu tebakanmu, jalankan, bandingkan.",
+      steps: [
+        "Buat file grade.py: minta input nilai (int), lalu konversi ke huruf pakai if/elif/else (A ≥ 80, B ≥ 70, C ≥ 60, selain itu D).",
+        "Tes 4 kasus: 85, 75, 65, 30 — pastikan masing-masing masuk jalur yang benar.",
+        "Coba pecahkan urutannya: taruh `elif nilai >= 60` di PALING ATAS, jalankan dengan 85 — kenapa hasilnya jadi C? (evaluasi sekuensial: yang pertama True menang!)",
+        "Buat file login.py: password_tersimpan = 'rahasia123'. Minta input, cocokkan case-insensitive (hint: .lower() dari py-12).",
+        "Gagal = cetak 'Password salah'; benar = 'Selamat datang'.",
+        "Kembangkan: gagal_berulang = 0, tiap gagal +1; jika gagal_berulang >= 3 cetak 'Akun terkunci' — ini pola nyata di sistem auth!",
+      ],
+      hint: "Pada langkah 3, elif >= 60 menang karena evaluasi berhenti di kondisi True PERTAMA. Urutan kondisi dari paling sempit/ketat ke paling longgar adalah disiplin wajib if-elif.",
+    },
+    quiz: [
+      {
+        q: "nilai = 85 dengan rangkaian `if nilai >= 60: ...C / elif nilai >= 70: ...B / elif nilai >= 80: ...A`. Hasilnya?",
+        options: ["A — nilai tertinggi dicocokkan dulu", "C — kondisi dicek sekuensial dan >= 60 True lebih dulu, sisa cabang dilewati", "B — Python memilih yang paling mendekati", "Error urutan kondisi"],
+        answer: 1,
+        why: "if-elif dievaluasi berurutan dan BERHENTI di kondisi True pertama. Karena >= 60 dicek dulu dan True, cabang lain tak pernah dibaca. Urutan kondisi harus dari paling ketat ke paling longgar.",
+      },
+      {
+        q: "Kapan else dijalankan?",
+        options: [
+          "Selalu, sebagai kondisi kedua",
+          "Hanya jika semua if dan elif sebelumnya bernilai False",
+          "Saat kondisi if True tapi kamu juga mau kode tambahan",
+          "Setiap awal program",
+        ],
+        answer: 1,
+        why: "else adalah jalan keluar terakhir: hanya dieksekusi bila seluruh kondisi sebelumnya gagal. Karena tak punya kondisi, ia PASTI terpenuhi — makanya harus paling akhir.",
+      },
+      {
+        q: "x = \"\". Apa hasil `if x: print('True branch')`?",
+        options: [
+          "Dicetak — string apapun truthy",
+          "Tidak dicetak — string kosong adalah falsy",
+          "Error — if butuh perbandingan eksplisit",
+          "Dicetak dua kali",
+        ],
+        answer: 1,
+        why: "Python mengevaluasi nilai apa pun sebagai boolean: string kosong, 0, dan koleksi kosong adalah falsy. Pola `if x:` justru idiomatik untuk cek 'apakah ada isinya'.",
+      },
+      {
+        q: "Manakah ternary yang BENAR dan pythonic?",
+        options: [
+          "print(\"selamat\") if lulus else print(\"perbaiki\")",
+          "(\"perbaiki\", \"selamat\")[lulus]",
+          "if lulus print(\"selamat\") else print(\"perbaiki\")",
+          "print(if lulus: \"selamat\")",
+        ],
+        answer: 0,
+        why: "Bentuk standar ternary Python: nilai-atau-aksi `if kondisi else` nilai-atau-aksi. Varian tuple berfungsi tapi dianggap tidak pythonic (indeks 0 untuk False = jebakan baca); opsi C dan D bukan sintaks Python.",
+      },
+    ],
+  },
+  {
+    slug: "py-15",
+    tid: "4769",
+    title: "Perulangan for & range",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4769" },
+    untukApa: [
+      "Mencetak 10 angka dengan 10 baris print itu legal tapi memalukan programmer 😄. Perulangan menyingkat 'lakukan X sebanyak N kali' jadi dua baris — dan bekerja untuk data sebanyak apa pun.",
+      "for adalah definite iteration: jumlah putaran SUDAH DITENTUKEN dari awal (dari iterable). Ini loop yang kamu pakai untuk memproses list, string, dan range.",
+    ],
+    sections: [
+      {
+        h: "for: iterasi atas iterable",
+        p: [
+          "Formatnya `for <var> in <iterable>:`. Iterable = objek yang bisa diiterasi: list, tuple, string. Setiap putaran, var mengambil elemen berikutnya:",
+        ],
+        code: 'var_list = [1, 2, 3, 4, 5]\nfor i in var_list:\n    print(i)\n\n# bekerja juga pada string:\nfor huruf in "abc":\n    print(huruf)   # a, b, c',
+      },
+      {
+        p: [
+          "Bandingkan dengan 10 baris print untuk angka 1-10: for menyelesaikannya 2 baris, dan ukuran datanya tak lagi masalah — 1.000 elemen pun tetap 2 baris.",
+        ],
+      },
+      {
+        h: "range(): urutan angka on-demand",
+        p: [
+          "range() menghasilkan urutan bilangan tanpa perlu menulis list manual. Sintaksnya range(start, stop, step) — start & step opsional, stop WAJIB dan EKSKLUSIF:",
+        ],
+        table: {
+          head: ["Pemanggilan", "Menghasilkan", "Catatan"],
+          rows: [
+            ["range(10)", "0..9", "start default 0; stop tidak ikut!"],
+            ["range(1, 10)", "1..9", "start eksplisit"],
+            ["range(1, 10, 2)", "1, 3, 5, 7, 9", "step 2 = lompat 2"],
+            ["range(10, 0, -1)", "10..1", "step negatif = hitung mundur"],
+          ],
+        },
+        code: 'for i in range(1, 10, 2):\n    print(i)   # 1, 3, 5, 7, 9 — bilangan ganjil',
+        callout:
+          "Stop EKSKLUSIF adalah jebakan klasik: range(10) berhenti di 9. Mau 1-10? range(1, 11). Otakmu harus membaca range sebagai 'sampai SEBELUM stop'.",
+      },
+    ],
+    lab: {
+      title: "Tabel perkalian + FizzBuzz",
+      intro: "Dua latihan interview klasik level pertama. FizzBuzz melatih kombinasi for + if + modulo dari py-11.",
+      steps: [
+        "Buat file kali.py: n = int(input('Tabel perkalian berapa? ')).",
+        "Loop: for i in range(1, 11): print(f'{n} x {i} = {n*i}') — tabel perkalian lengkap 1-10.",
+        "Modifikasi: range(1, 11, 2) — amati hanya 1,3,5,7,9 yang tercetak.",
+        "Buat fizzbuzz.py: for n in range(1, 31): — cetak angka, TAPI: kelipatan 3 cetak 'Fizz', kelipatan 5 cetak 'Buzz', kelipatan 15 cetak 'FizzBuzz'.",
+        "Tebak dulu urutan kondisinya, lalu jalankan: kenapa cek 15 HARUS lebih dulu daripada 3 atau 5?",
+        "Bonus: pakai range(30, 0, -1) untuk mencetak mundur.",
+      ],
+      hint: "FizzBuzz: if n % 15 == 0 lebih dulu, karena 15 juga kelipatan 3 dan 5 — kalau cek % 3 dulu, 15 tak pernah sampai ke cabang FizzBuzz (evaluasi sekuensial, sama seperti lesson percabangan).",
+    },
+    quiz: [
+      {
+        q: "for i in range(1, 10, 2): — angka yang tercetak adalah...",
+        options: ["1 sampai 10 semua", "1, 3, 5, 7, 9", "2, 4, 6, 8", "1 sampai 9 semua"],
+        answer: 1,
+        why: "start=1, stop=10 (eksklusif, jadi sampai 9), step=2 (lompat 2). Hasilnya bilangan ganjil 1..9. Membaca range: mulai di start, berhenti SEBELUM stop, bergerak sejauh step.",
+      },
+      {
+        q: "Kenapa range(10) menghasilkan 0-9, bukan 1-10?",
+        options: [
+          "Bug di Python",
+          "Karena stop bersifat eksklusif dan start default-nya 0",
+          "Karena Python menghitung dari 1",
+          "Karena range hanya untuk array",
+        ],
+        answer: 1,
+        why: "Dua fakta digabung: start tak diberi = 0, dan stop selalu eksklusif (tidak ikut). Konsisten dengan indexing/slicing string dari py-10 yang juga mulai 0 dan batas-akhir eksklusif.",
+      },
+      {
+        q: "Apa yang dimaksud for bersifat definite iteration?",
+        options: [
+          "Loop-nya pasti error-free",
+          "Jumlah pengulangan ditentukan eksplisit sebelumnya — dari isi iterable",
+          "Kecepatan loop sudah ditentukan Python",
+          "Loop hanya untuk angka",
+        ],
+        answer: 1,
+        why: "Definite = terdefinisi di muka: Python tahu tepat berapa putaran dari panjang iterable. Kontras dengan while (indefinite) yang berhenti berdasarkan kondisi, bukan jumlah.",
+      },
+      {
+        q: "Di FizzBuzz, kondisi kelipatan 15 harus dicek...",
+        options: [
+          "Terakhir saja, hasilnya sama",
+          "Lebih dulu — karena 15 juga kelipatan 3 dan 5, dan if-elif berhenti di True pertama",
+          "Tidak perlu, Python otomatis tahu",
+          "Dengan operator or",
+        ],
+        answer: 1,
+        why: "Pola if-elif sekuensial: cabang pertama yang True menang. Kalau % 3 dicek dulu, angka 15 tercetak 'Fizz' dan tak pernah sampai cabang FizzBuzz. Pemesanan kondisi adalah bagian dari logika.",
+      },
+    ],
+  },
+  {
+    slug: "py-16",
+    tid: "4769",
+    title: "while, break & continue",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4769" },
+    untukApa: [
+      "for hebat saat jumlah putaran diketahui. Tapi 'coba password sampai benar' atau 'baca input sampai user ketik exit' — jumlah putarannya TIDAK DIKETAHUI. Di sanalah while.",
+      "break dan continue memberi kontrol penuh: hentikan loop lebih awal, atau lewati satu putaran. Ini trio yang dipakai di semua script scraping/automation.",
+    ],
+    sections: [
+      {
+        h: "while: loop berdasarkan kondisi",
+        p: [
+          "while = indefinite iteration: berjalan SELAMA kondisi True, berhenti saat False. Jumlah putarannya tidak ditentukan di muka — ditentukan oleh kondisi:",
+        ],
+        code: 'counter = 1\nwhile counter <= 5:\n    print(counter)\n    counter += 1   # increment: WAJIB, lihat bahaya di bawah\n\n# 1, 2, 3, 4, 5',
+      },
+      {
+        p: [
+          "Rumus aman while: (1) inisialisasi variabel SEBELUM loop, (2) cek kondisi, (3) UBAH variabel di dalam loop. Lupakan langkah 3:",
+        ],
+        code: 'counter = 1\nwhile counter <= 5:\n    print(counter)\n# tanpa increment -> counter selalu 1 -> kondisi selalu True\n# INFINITE LOOP: program berjalan tanpa henti (hentikan dengan Ctrl+C)',
+      },
+      {
+        callout:
+          "Infinite loop bukan error — program jalan normal, cuma TIDAK PERNAH berhenti. Di terminal: Ctrl+C. Di notebook: interrupt kernel. Selalu pastikan ada yang mengubah kondisi menuju False.",
+      },
+      {
+        h: "break: keluar lebih awal",
+        p: [
+          "break menghentikan perulangan SEKETIKA dan lompat ke kode setelah loop. Di nested loop, break hanya menghentikan loop DI TINGKATNYA berada:",
+        ],
+        code: 'for huruf in "Dico ding":\n    if huruf == " ":\n        break\n    print("Huruf saat ini:", huruf)\n\n# D, i, c, o — berhenti tepat sebelum spasi',
+      },
+      {
+        h: "continue: lewati satu putaran",
+        p: [
+          "continue menghentikan PUTARAN INI saja, lalu lanjut ke iterasi berikutnya. Bandingkan dengan break di string yang sama:",
+        ],
+        code: 'for huruf in "Dico ding":\n    if huruf == " ":\n        continue\n    print("Huruf saat ini:", huruf)\n\n# D, i, c, o, d, i, n, g — spasi dilewati, loop jalan sampai habis',
+      },
+      {
+        p: [
+          "break = berhenti TOTAL; continue = skip SEKALI. Pada while, keduanya sama berguna: break untuk 'ditemukan, cukup', continue untuk 'baris ini jelek, ambil berikutnya'.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Simulator login attempt (bergaya auth nyata)",
+      intro: "Program yang meminta password sampai benar ATAU 3 kali gagal — persis pola lockout di sistem authentication.",
+      steps: [
+        "Buat file login_sim.py. password = 'rahasia123', attempts = 0.",
+        "Loop utama: while attempts < 3: — di dalamnya minta input('Password: ').",
+        "Jika benar: print('Selamat datang!') lalu break.",
+        "Jika salah: attempts += 1 dan cetak sisa percobaan: print(f'Salah. Sisa: {3 - attempts}').",
+        "Setelah loop: if attempts >= 3: print('Akun terkunci.') — kalau tidak tercetak berarti login sukses (break).",
+        "Uji 3 skenario: benar di percobaan pertama, benar di ketiga, salah semua.",
+        "Extra: pakai continue untuk melewati password yang kosong tanpa menghitung attempts.",
+      ],
+      hint: "Pola di langkah 5 disebut flag after loop: karena break melewati sisa loop, kondisi attempts >= 3 hanya True saat loop kehabisan tanpa sukses. Ini cara Python mendeteksi 'berhenti karena gagal, bukan karena berhasil'.",
+    },
+    quiz: [
+      {
+        q: "Apa yang menyebabkan infinite loop pada while?",
+        options: [
+          "Kondisi yang terlalu kompleks",
+          "Variabel yang menentukan kondisi tidak pernah diubah menuju False di dalam loop",
+          "Pakai break di dalam loop",
+          "Lupa titik dua",
+        ],
+        answer: 1,
+        why: "while berjalan selama kondisi True. Kalau tidak ada apa pun di dalam loop yang membuat kondisi menuju False (misal lupa increment), kondisi True selamanya — program tak pernah berhenti.",
+      },
+      {
+        q: "break vs continue — pasangan perilaku yang benar:",
+        options: [
+          "break = lewati satu putaran; continue = hentikan loop",
+          "break = hentikan loop seketika; continue = lewati sisa putaran ini, lanjut iterasi berikutnya",
+          "Keduanya identik, cuma gaya penulisan",
+          "break hanya untuk while, continue hanya untuk for",
+        ],
+        answer: 1,
+        why: "break keluar dari loop SEKETIKA (eksekusi lanjut setelah loop). continue hanya memotong putaran berjalan dan kembali ke cek kondisi/ambil elemen berikutnya.",
+      },
+      {
+        q: "Di nested loop, break di loop DALAM akan...",
+        options: [
+          "Menghentikan semua loop sekaligus",
+          "Menghentikan loop dalam saja — loop luar lanjut putaran berikutnya",
+          "Error — break hanya boleh di loop luar",
+          "Menghentikan loop luar lebih dulu",
+        ],
+        answer: 1,
+        why: "break bekerja pada tingkat loop tempat ia berada. Loop luar tidak terpengaruh dan melanjutkan iterasinya — kalau mau keluar dari semuanya, perlu flag atau refaktor ke fungsi.",
+      },
+      {
+        q: "Kapan while lebih tepat daripada for?",
+        options: [
+          "Saat mengiterasi list yang isinya diketahui",
+          "Saat jumlah pengulangan tidak diketahui di muka — berhenti bergantung kondisi (input user, data ditemukan, dsb)",
+          "Saat butuh loop yang pasti berjalan 10 kali",
+          "while selalu lebih tepat",
+        ],
+        answer: 1,
+        why: "While = indefinite iteration: tak tahu berapa putaran, hanya tahu KAPAN harus berhenti. 'Tanya user sampai benar' dan 'poll sampai server siap' contoh klasiknya. Jumlah pasti = for.",
+      },
+    ],
+  },
+  {
+    slug: "py-17",
+    tid: "4769",
+    title: "Nested Loop & for-else",
+    minutes: 12,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4769" },
+    untukApa: [
+      "Grid, tabel, kombinasi 'setiap X dipasangkan dengan setiap Y' — semuanya nested loop. Ini prasyarat memahami matriks di fase 8 dan double-processing data.",
+      "for-else adalah fitur Python yang jarang ada di bahasa lain: blok else yang jalan saat loop SELESAI TANPA break — sempurna untuk pola pencarian.",
+    ],
+    sections: [
+      {
+        h: "Nested loop: loop dalam loop",
+        p: [
+          "Loop luar berjalan satu putaran, loop dalam berjalan PENUH; lalu loop luar maju satu lagi — begitu seterusnya. Total eksekusi = jumlah_luar × jumlah_dalam:",
+        ],
+        code: 'for i in range(1, 3):\n    for j in range(1, 3):\n        print(i, j)\n\n# 1 1\n# 1 2\n# 2 1\n# 2 2',
+      },
+      {
+        p: [
+          "Baca polanya: (1,1), (1,2) — loop dalam selesai penuh untuk i=1 — baru (2,1), (2,2). Analogi: setiap baris (i) berisi beberapa kolom (j).",
+        ],
+      },
+      {
+        h: "for-else: deteksi 'tidak ditemukan'",
+        p: [
+          "else setelah for dieksekusi hanya jika loop selesai TANPA break. Pola pencarian klasik:",
+        ],
+        code: 'numbers = [1, 2, 3, 4, 5]\n\nfor num in numbers:\n    if num == 6:\n        print("Ditemukan!")\n        break\nelse:\n    print("Angka tidak ditemukan.")\n\n# else jalan karena loop tuntas tanpa pernah break',
+      },
+      {
+        p: [
+          "Kalau angka ditemukan, break mengeksekusi dan else DILEWATI. while punya else dengan aturan mirip: else jalan saat kondisi jadi False secara normal — tapi TIDAK jalan jika loop keluar lewat break.",
+        ],
+        callout:
+          "Kombinasi break + for-else menggantikan pola 'pakai flag ditemukan = False, set True saat ketemu, cek flag setelah loop' — lebih ringkas dan tak ada flag yang lupa diinisialisasi.",
+      },
+    ],
+    lab: {
+      title: "Scanner port mini + pencarian berganda",
+      intro: "Nested loop + for-else dalam bentuk yang dekat dengan duniamu: scanner sederhana (localhost legal) dan pola pencarian.",
+      steps: [
+        "Buat file scanner.py (100% lokal, bukan jaringan asli): ports = [21, 22, 80, 443, 8080] sebagai simulasi daftar port.",
+        "Nested: for target in ['server-a', 'server-b']: lalu for port in ports: print(f'{target}:{port} dicek').",
+        "Amati: total baris = 2 × 5 = 10 — setiap target dipasangkan semua port.",
+        "Tambahkan break di loop port saat port == 443 (simulasi 'berhenti saat ketemu web server') — amati loop dalam berhenti, loop luar lanjut.",
+        "Buat file cari.py: gunakan pola for-else untuk mencari angka 7 di numbers = [1,3,5,7,9]. Ganti target jadi 8 — bandingkan jalannya else.",
+        "Tantangan: scan dict 'server-b' langsung skip: tambahkan if target == 'server-b': continue di loop luar — lewati seluruh target tanpa menghentikan scanner.",
+      ],
+      hint: "continue di loop LUAR melewati satu target penuh; break di loop DALAM hanya memotong port-scan satu target. Bedakan posisi kontrol — ini inti lesson ini.",
+    },
+    quiz: [
+      {
+        q: "for i in range(3): dan di dalamnya for j in range(4): — berapa kali blok paling dalam dieksekusi?",
+        options: ["7 kali", "12 kali", "3 kali", "4 kali"],
+        answer: 1,
+        why: "Total = luar × dalam = 3 × 4 = 12. Loop dalam berjalan penuh untuk SETIAP putaran loop luar — inilah kenapa nested loop mahal di data besar (1000 × 1000 = 1 juta eksekusi).",
+      },
+      {
+        q: "Blok else setelah for dijalankan saat...",
+        options: [
+          "Setiap kali, sebagai penutup loop",
+          "Loop selesai penuh TANPA pernah break",
+          "Loop berhenti karena break",
+          "Kondisi loop False",
+        ],
+        answer: 1,
+        why: "for-else dieksekusi hanya bila loop tuntas normal (iterables habis) tanpa break. Break 'membatalkan' hak else — desain yang pas untuk pola pencarian: else = 'tidak ketemu'.",
+      },
+      {
+        q: "Pola `for x in data: if x == target: break` + `else: print('tidak ada')` menggantikan pola apa di bahasa lain?",
+        options: [
+          "Pola try-except",
+          "Flag boolean (ditemukan = False, ubah saat ketemu, cek setelah loop)",
+          "Rekursi",
+          "Nested if",
+        ],
+        answer: 1,
+        why: "Tanpa for-else kamu butuh variabel flag yang di-set saat ketemu dan diperiksa setelah loop — tiga tempat yang bisa salah. for-else memadatkan semuanya: else otomatis berarti 'tak pernah ketemu'.",
+      },
+      {
+        q: "while-else berbeda dari for-else: blok else pada while...",
+        options: [
+          "Jalan hanya jika ada break",
+          "Jalan saat kondisi while jadi False secara normal — tapi TIDAK jalan jika keluar lewat break",
+          "Tidak pernah jalan",
+          "Jalan tiap iterasi",
+        ],
+        answer: 1,
+        why: "Sama-sama butuh 'selesai tanpa break'. Perbedaannya pemicu selesai: for tuntas karena iterable habis; while selesai karena kondisi berubah False. Break pada keduanya membatalkan else.",
+      },
+    ],
+  },
+  {
+    slug: "py-18",
+    tid: "4771",
+    title: "Error & Exception Handling",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4771" },
+    untukApa: [
+      "Programmu sudah bisa memutuskan dan berulang — sekarang ia harus TANGGUH. User mengetik 'abc' saat diminta angka, file tidak ada, koneksi putus: dunia nyata penuh kegagalan.",
+      "Dua pilihan: biarkan program crash, atau tangkap kegagalannya dan tangani dengan rapi. try-except adalah skill yang membedakan script mainan dari tool production.",
+    ],
+    sections: [
+      {
+        h: "Dua keluarga error",
+        table: {
+          head: ["Jenis", "Kapan", "Contoh"],
+          rows: [
+            ["Syntax error", "Sebelum program jalan — Python tak mengerti perintahmu", "SyntaxError (lupa titik dua), IndentationError (salah menjorok)"],
+            ["Exception", "Saat program berjalan — perintah dimengerti tapi operasinya gagal", "NameError, TypeError, ZeroDivisionError, KeyError"],
+          ],
+        },
+        p: [
+          "Pesan exception dibuka 'Traceback (most recent call last)' — jejak baris yang dieksekusi sebelum titik error. Baca traceback dari BAWAH ke ATAS: baris terbawah = titik error.",
+        ],
+        code: 'print(angka)\n# NameError: name \'angka\' is not defined\n\nbukan_angka = "1"\nbukan_angka + 2\n# TypeError: can only concatenate str (not "int") to str',
+      },
+      {
+        h: "try-except: tangkap dan tangani",
+        p: [
+          "Kode yang berisiko gagal ditaruh di try; respons kegagalannya di except — SPECIFIK per tipe exception:",
+        ],
+        code: 'z = 0\ntry:\n    print(1 / z)\nexcept ZeroDivisionError:\n    print("Anda tidak bisa membagi angka dengan nilai nol.")\n\n# program lanjut jalan — TIDAK crash',
+      },
+      {
+        h: "Struktur lengkap: else & finally",
+        p: [
+          "try bisa dilengkapi else (jalan jika TIDAK ada exception) dan finally (jalan SETELAH segalanya — exception atau tidak):",
+        ],
+        code: 'var_dict = {"rata_rata": "1.0"}\n\ntry:\n    print(f"rata-rata: {var_dict[\'rata_rata\']}")\nexcept KeyError:\n    print("Key tidak ditemukan.")\nexcept TypeError:\n    print("Operasi tidak valid untuk tipe ini.")\nelse:\n    print("Sukses — tidak ada exception.")\nfinally:\n    print("Selalu dieksekusi.")',
+        callout:
+          "finally adalah tempat pembersihan: tutup file, tutup koneksi, lock release — harus jalan apapun yang terjadi. except spesifik bertingkat lebih baik daripada satu except telanjang (menelan semua error diam-diam = bug terselubung).",
+      },
+      {
+        h: "raise: menolak input dengan sengaja",
+        p: [
+          "Kamu juga bisa MEMBANGKITKAN exception sendiri untuk menegakkan aturan program — biasanya dikombinasikan dengan if:",
+        ],
+        code: 'var = -1\nif var < 0:\n    raise ValueError("Bilangan negatif tidak diperbolehkan")\n\n# ValueError: Bilangan negatif tidak diperbolehkan',
+      },
+    ],
+    lab: {
+      title: "Kalkulator anti-crash",
+      intro: "Ambil kalkulator dari py-11, kini dibuat tangguh: input salah tidak membunuh program.",
+      steps: [
+        "Buat file kalkulator2.py: minta dua input angka (bisa 'abc' — bukan angka!).",
+        "Konversi di dalam try: a = int(input(...)) — tanpa proteksi, 'abc' meledak ValueError.",
+        "Bungkus dengan try-except ValueError: print('Input harus angka!') — program lanjut hidup.",
+        "Tambah operasi pembagian a / b di try yang sama, dengan except ZeroDivisionError terpisah.",
+        "Lengkapi else (cetak hasil saat sukses) dan finally (cetak 'Selesai').",
+        "Tes 3 skenario: normal, 'abc' sebagai input, b = 0 — amati cabang mana yang jalan.",
+        "Challenge: bungkus semuanya di while True: dengan break di else — program terus meminta sampai input valid (pola retry production!).",
+      ],
+      hint: "Pola while True + try + break di else adalah standar industri untuk input validation: minta ulang sampai sah, tangani setiap jenis kegagalan dengan pesan yang berbeda.",
+    },
+    quiz: [
+      {
+        q: "Apa beda mendasar SyntaxError dan exception?",
+        options: [
+          "SyntaxError lebih serius sehingga program crash total",
+          "SyntaxError terdeteksi sebelum program jalan; exception terjadi saat program berjalan",
+          "Exception bisa dicegah, SyntaxError tidak",
+          "Tidak ada beda",
+        ],
+        answer: 1,
+        why: "SyntaxError = Python tidak mengerti kalimatmu ( parsing gagal sebelum eksekusi). Exception = kalimat dimengerti tapi operasinya gagal saat runtime (bagi nol, variabel tak ada). try-except menangani yang kedua, bukan yang pertama.",
+      },
+      {
+        q: "Blok finally dieksekusi...",
+        options: [
+          "Hanya saat tidak ada exception",
+          "Hanya saat terjadi exception",
+          "Selalu — setelah try/except selesai, apapun hasilnya",
+          "Hanya saat ada raise",
+        ],
+        answer: 2,
+        why: "finally menjamin eksekusi apapun kondisinya — sukses (setelah else), atau gagal (setelah except). Makanya ia rumah untuk pembersihan resource: tutup file/koneksi yang tidak boleh tertinggal terbuka.",
+      },
+      {
+        q: "Kenapa `except:` telanjang (tanpa tipe) dianggap praktik buruk?",
+        options: [
+          "Karena tidak valid secara sintaks",
+          "Karena menelan SEMUA error termasuk yang tidak terduga — bug terselubung dan program jalan dengan perilaku tak terduga",
+          "Karena lebih lambat",
+          "Karena hanya bekerja untuk ValueError",
+        ],
+        answer: 1,
+        why: "except spesifik (ValueError, ZeroDivisionError) berarti kamu TAHU kegagalan apa yang ditangani. except telanjang menangkap semuanya — termasuk typo dan bug — menyembunyikannya balik pesan yang sama. Debug jadi mimpi buruk.",
+      },
+      {
+        q: "raise ValueError('pesan') digunakan untuk...",
+        options: [
+          "Mencetak pesan error ke layar",
+          "Menandai kegagalan dengan sengaja saat aturan program dilanggar — dan menghentikan alur di titik itu",
+          "Mengabaikan error",
+          "Mengulang kode yang gagal",
+        ],
+        answer: 1,
+        why: "raise membangkitkan exception secara sengaja: cara idiomatik menegakkan precondition (input negatif dilarang, parameter wajib ada). Umumnya dipasangkan dengan if, dan bisa ditangkap try-except di lapisan atas.",
+      },
+    ],
+  },
 ];
