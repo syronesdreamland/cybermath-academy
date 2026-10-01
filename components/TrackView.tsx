@@ -379,7 +379,7 @@ const TID_RE = /tutorials\/(\d+)/;
 function internalLesson(item: TrackItem) {
   if (!item.url) return null;
   const m = item.url.match(TID_RE);
-  if (m) return getLessonByTid(m[1]) ?? null;
+  if (m) return getLessonByTid(m[1]) ?? getLessonBySourceUrl(item.url) ?? null;
   return getLessonBySourceUrl(item.url) ?? null;
 }
 

@@ -1724,4 +1724,548 @@ export const PYTHON_LESSONS: Lesson[] = [
       },
     ],
   },
+  {
+    slug: "py-19",
+    tid: "5017",
+    title: "Array & List: Struktur Data Linear",
+    minutes: 12,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/5017" },
+    untukApa: [
+      "Satu variabel = satu nilai. Padahal datamu sering BANYAK: 100 subdomain hasil scan, 1.000 baris log, daftar harga. Struktur data linear menyimpan semuanya dalam satu nama.",
+      "Python tidak punya tipe 'array' klasik — ia punya LIST yang lebih fleksibel, plus modul array asli kalau benar-benar butuh. Paham bedanya bikin kamu tidak salah pilih tool.",
+    ],
+    sections: [
+      {
+        h: "Struktur data: cara mengatur data",
+        p: [
+          "Struktur data = cara mengatur dan menyimpan data supaya bisa diakses dan dioperasikan secara efisien. Dengan struktur data, sekumpulan nilai punya HUBUNGAN satu sama lain (urutan, posisi) — bukan sekadar variabel-variabel lepas.",
+          "Array adalah struktur data LINEAR: elemen tersusun berurutan berdasarkan indeks. Analogi katanya memang 'sekelompok besar yang terdiri dari beberapa hal' — persis seperti list Python.",
+        ],
+      },
+      {
+        h: "Array klasik vs List Python",
+        table: {
+          head: ["Aspek", "Array klasik", "List Python"],
+          rows: [
+            ["Tipe elemen", "HARUS homogen (semua satu tipe)", "Bebas — campur int, str, apa pun"],
+            ["Dari mana", "Bahasa lain (C, Java) / modul array Python", "Built-in, tanpa import"],
+            ["Fleksibilitas", "Kaku tapi hemat memori & cepat", "Sangat fleksibel untuk pemula"],
+          ],
+        },
+        p: [
+          "Modul array Python tetap ada kalau butuh array sungguhan (hemat memori untuk data numerik besar):",
+        ],
+        code: 'import array\n\nx = array.array("i", [1, 2, 3, 4, 5])   # "i" = tipe integer\nprint(x)         # array(\'i\', [1, 2, 3, 4, 5])\n\n# elemen harus SETIPE:\n# array.array("i", [1, 2, "Dicoding"])  -> TypeError!',
+      },
+      {
+        h: "List: pengganti array sehari-hari",
+        code: 'x = [1, 2, 3, 4, 5]\nprint(x)   # [1, 2, 3, 4, 5]',
+        callout:
+          "Kesepakatan praktis: di Python, 99% kasus pakai LIST dan sebut saja 'array' tidak apa-apa. Modul array baru dipakai saat data numerik raksasa (jutaan elemen) dan memori jadi soal serius.",
+      },
+    ],
+    lab: {
+      title: "List vs array: buktikan bedanya",
+      intro: "Eksperimen kecil yang menjernihkan perbedaan heterogen vs homogen.",
+      steps: [
+        "Mode interaktif: buat list campur: campur = [1, \"dua\", 3.0, True] — jalan tanpa error.",
+        "Cetak id() tiap elemen dengan for — tiap nilai punya alamat sendiri (list menyimpan REFERENSI, bukan menempelkan nilai).",
+        "Sekarang array: import array lalu a = array.array(\"i\", [1,2,3]) — sukses.",
+        "Coba array.array(\"i\", [1, \"dua\"]) — baca TypeError-nya: elemen array wajib setipe.",
+        "Buat list target dari port scan: ports = [21, 22, 80, 443, 8080] dan cetak panjangnya dengan len(ports).",
+      ],
+      hint: "len() mengembalikan jumlah elemen — akan terus dipakai di setiap pemrosesan array berikutnya.",
+    },
+    quiz: [
+      {
+        q: "Bedanya array klasik dan list Python yang paling menonjol?",
+        options: [
+          "Array hanya bisa diakses dengan for",
+          "Elemen array harus bertipe sama (homogen), list bebas campur tipe",
+          "List tidak punya indeks",
+          "Array lebih lambat dan tidak bisa digunakan",
+        ],
+        answer: 1,
+        why: "Array klasik mendedikasikan memori seragam per elemen — makanya tipenya wajib sama. List Python menyimpan referensi bebas, jadi [1, 'dua', 3.0] sah-sah saja.",
+      },
+      {
+        q: "Kenapa list dipakai sebagai pengganti array di Python sehari-hari?",
+        options: [
+          "Karena Python melarang modul array",
+          "Karena list built-in, fleksibel, dan perilaku aksesnya sama — cukup untuk hampir semua kasus",
+          "Karena array tidak punya indeks",
+          "Karena list lebih lambat",
+        ],
+        answer: 1,
+        why: "List menyediakan struktur linear berindeks yang sama dengan array, tanpa batasan tipe dan tanpa import. Modul array baru masuk akal untuk data numerik raksasa yang butuh efisiensi memori.",
+      },
+      {
+        q: "array.array(\"i\", [1, 2, 3]) — maksud \"i\" adalah...",
+        options: [
+          "Nama array",
+          "Kode tipe elemen: semua elemen wajib integer",
+          "Indeks awal",
+          "Panjang maksimum array",
+        ],
+        answer: 1,
+        why: "Modul array menuntut deklarasi tipe di muka: \"i\" = int (signed), ada juga kode lain seperti \"f\" untuk float. Itulah sifat homogen array klasik yang tidak dimiliki list.",
+      },
+    ],
+  },
+  {
+    slug: "py-20",
+    tid: "5020",
+    title: "Deklarasi & Akses Array",
+    minutes: 12,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/5020" },
+    untukApa: [
+      "Dua situasi nyata saat membuat kumpulan data: (1) isinya SUDAH TAHU — tulis langsung; (2) isinya BELUM TAHU — siapkan wadah berisi nilai default dulu, isi belakangan.",
+      "Akses elemen lewat indeks adalah operasi paling dasar di struktur data — dan jebakannya (indeks mulai 0, batas maksimum n-1) harus nempel sebelum lanjut.",
+    ],
+    sections: [
+      {
+        h: "Cara 1: isi langsung",
+        p: [
+          "Kalau nilai sudah diketahui, deklarasikan sekaligus isiannya. Elemen terurut berindeks 0 sampai n-1:",
+        ],
+        code: 'var_arr = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]\nprint(var_arr)   # 10 elemen, indeks 0..9',
+      },
+      {
+        h: "Cara 2: nilai default + list comprehension",
+        p: [
+          "Kalau isinya belum diketahui, buat wadah dengan nilai default — nilai di luar rentang data yang disepakati (misal data valid 1-10, default-nya 0) supaya mudah dikenali 'belum diisi'. Pembuatannya satu baris dengan list comprehension:",
+        ],
+        code: 'var_arr = [0 for i in range(4)]\nprint(var_arr)   # [0, 0, 0, 0]\n\n# nanti diisi bertahap:\nvar_arr[0] = 1\nvar_arr[1] = 2\nvar_arr[3] = 4\nprint(var_arr)   # [1, 2, 0, 4] -> indeks 2 jelas belum diisi',
+        callout:
+          "List comprehension `[0 for i in range(4)]` dibaca: 'isi 0, sebanyak 4 kali'. Ini for dalam satu baris — konsep one-liner dari py-13 bertemu nested loop dari py-17.",
+      },
+      {
+        h: "Akses & update via indeks",
+        p: [
+          "Setiap elemen diakses lewat indeksnya — persis indexing string dari py-10, mulai dari 0:",
+        ],
+        code: 'var_arr = [9, 8, 7, 6, 5]\n\nprint(var_arr[0])    # 9  (elemen PERTAMA)\nprint(var_arr[4])    # 5  (elemen TERAKHIR = indeks n-1)\nprint(var_arr[-1])   # 5  (indeks negatif: dari belakang)\n\nvar_arr[0] = 99      # update elemen (list MUTABLE — beda dengan string!)\nprint(var_arr)       # [99, 8, 7, 6, 5]',
+      },
+      {
+        p: [
+          "Catatan penting: string immutable (py-10), tapi list MUTABLE — elemennya bisa diganti lewat assignment indeks. Ini salah satu alasan list jadi wadah utama data di Python.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Papan skor 5 pemain",
+      intro: "Gabungkan kedua cara deklarasi dalam satu program skor game — dari default sampai terisi.",
+      steps: [
+        "Buat file skor.py: skor = [0 for i in range(5)] — 5 pemain, default 0.",
+        "Cetak awal: print(skor) — semua 0, artinya belum ada yang main.",
+        "Isi via indeks: skor[0] = 150, skor[2] = 90, skor[4] = 200.",
+        "Cetak per pemain dengan for i in range(len(skor)): print(f'Pemain {i+1}: {skor[i]}').",
+        "Amati pemain 2 tetap 0 — terlihat jelas siapa yang belum main (inilah gunanya default).",
+        "Coba akses skor[5] — baca IndexError: indeks maksimum adalah len-1 = 4. Ingat selalu: 0..n-1.",
+        "Bonus: skor[-1] untuk elemen terakhir tanpa tahu panjangnya.",
+      ],
+      hint: "IndexError 'list index out of range' = kamu minta indeks di luar 0..n-1. len() selalu bisa dijadikan pengaman sebelum akses.",
+    },
+    quiz: [
+      {
+        q: "var_arr = [0 for i in range(4)] menghasilkan...",
+        options: ["[0, 0, 0, 0]", "4", "range(0, 4)", "[0, 1, 2, 3]"],
+        answer: 0,
+        why: "List comprehension mengeksekusi '0' sebanyak 4 kali (range(4) = 0..3) — menghasilkan wadah 4 elemen berisi default 0, siap diisi nilai asli lewat indeks.",
+      },
+      {
+        q: "Kenapa memilih 0 sebagai nilai default ketika data valid berada di rentang 1-10?",
+        options: [
+          "Karena 0 paling cepat diketik",
+          "Karena default harus di LUAR rentang valid — supaya 'belum diisi' mudah dibedakan dari data asli",
+          "Karena 0 tidak memakan memori",
+          "Karena Python mewajibkan default 0",
+        ],
+        answer: 1,
+        why: "Default di luar rentang (kesepakatan tim) membuat status 'belum diisi' terlihat jelas: [1, 2, 0, 4] pada indeks 2 jelas belum diisi. Kalau default 1, tak bisa dibedakan dari data asli.",
+      },
+      {
+        q: "arr berisi 5 elemen. Indeks yang VALID adalah...",
+        options: ["1 sampai 5", "0 sampai 5", "0 sampai 4", "1 sampai 4"],
+        answer: 2,
+        why: "Indeks array/list selalu 0..n-1. Untuk 5 elemen: 0,1,2,3,4. Mengakses indeks 5 = IndexError karena di luar rentang — meski 5 adalah 'jumlah elemen'.",
+      },
+      {
+        q: "s = \"abc\" dan l = [\"a\", \"b\", \"c\"]. Manakah yang valid?",
+        options: [
+          "s[0] = \"X\" dan l[0] = \"X\" — dua-duanya valid",
+          "s[0] = \"X\" error (immutable), l[0] = \"X\" valid (mutable)",
+          "Dua-duanya error",
+          "l[0] = \"X\" error, s[0] = \"X\" valid",
+        ],
+        answer: 1,
+        why: "String immutable — item assignment ditolak (py-10). List mutable — elemen bisa diganti lewat indeks. Inilah beda fundamental 'urutan karakter' vs 'wadah referensi', dan alasan list jadi struktur utama.",
+      },
+    ],
+  },
+  {
+    slug: "py-21",
+    tid: "5077",
+    title: "Pemrosesan Sekuensial & Mencari Nilai Terbesar",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/5077" },
+    untukApa: [
+      "Menyimpan data ke array itu baru setengah cerita — nilai program muncul saat kamu MEMPROSESnya: jumlahkan, bandingkan, cari terbesar. Semua pola itu bermula dari satu teknik: pemrosesan sekuensial.",
+      "Algoritma two pointers untuk mencari nilai terbesar adalah program algoritmik pertamamu — dan pola yang sama muncul lagi di interview, CP, sampai analisis log.",
+    ],
+    sections: [
+      {
+        h: "Pemrosesan sekuensial: satu per satu dari indeks terkecil",
+        p: [
+          "Pemrosesan sekuensial = memproses setiap elemen array BERURUTAN, dari indeks terkecil (0) sampai terbesar (n-1). Hampir selalu diwujudkan dengan loop:",
+        ],
+        code: 'var_arr = [1, 2, 3, 4, 5]\n\nfor i in range(len(var_arr)):\n    current = var_arr[i]\n    next_index = i + 1\n    if next_index < len(var_arr):\n        next_element = var_arr[next_index]\n    else:\n        next_element = None   # elemen terakhir: tidak ada berikutnya\n    print(f"Current: {current}, next: {next_element}")',
+      },
+      {
+        p: [
+          "Perhatikan penjagaan `if next_index < len(var_arr)` — elemen terakhir tidak punya suksesor, dan tanpa pengaman itu kamu kena IndexError. Aturan mainnya: elemen pertama selalu indeks 0, berhenti saat indeks terbesar tercapai, array tak boleh kosong.",
+        ],
+      },
+      {
+        h: "Dua gaya loop array",
+        p: [
+          "for i in range(len(arr)) memberi INDEKS (butuh saat kamu mengakses arr[i+1] atau mengubah arr[i]). for x in arr memberi NILAI langsung (cukup saat hanya membaca). Gaya sekuensial klasik pakai indeks karena pola current/next butuh posisi.",
+        ],
+      },
+      {
+        h: "Two pointers: cari nilai terbesar",
+        p: [
+          "Algoritma = langkah terstruktur menyelesaikan masalah. Untuk mencari nilai terbesar, gunakan dua penanda: left (kandidat terbesar sejauh ini) dan right (pembanding berikutnya):",
+        ],
+        code: 'var_arr = [1, 7, 2, 89, 3]\n\nleft = var_arr[0]          # kandidat terbesar\nfor i in range(1, len(var_arr)):\n    right = var_arr[i]     # pembanding berikutnya\n    if right > left:\n        left = right       # kandidat baru\n\nprint(left)   # 89',
+      },
+      {
+        p: [
+          "Jalannya: 1 vs 7 → left=7; 7 vs 2 → tetap; 7 vs 89 → left=89; 89 vs 3 → tetap. Sekali lewat (satu pass), terbesar pasti ketemu. Left selalu mengklaim 'terbesar sejauh ini'; right berjalan membandingkan satu per satu.",
+        ],
+        callout:
+          "Pola kandidat-terbaik (best-so-far) ini muncul di mana-mana: cari max, min, string terpanjang, skor tertinggi. Strukturnya selalu: kandidat = elemen pertama, loop pembanding, update kandidat jika ada yang lebih unggul.",
+      },
+    ],
+    lab: {
+      title: "Analyzer log mini",
+      intro: "Terapkan sekuensial + best-so-far pada data yang mirip pekerjaan nyata: durasi request per baris.",
+      steps: [
+        "Buat file log.py: durasi = [120, 340, 90, 512, 76, 201] (milidetik, simulasi).",
+        "Sekuensial dulu: cetak tiap elemen bersama elemen berikutnya (current/next) — jangan lupa pengaman indeks terakhir.",
+        "Total: total = 0 lalu loop menambahkan tiap elemen (accumulator).",
+        "Terbesar: terapkan two pointers — left mulai durasi[0], bandingkan dari indeks 1.",
+        "Terkecil: ubah satu tanda — if right < left. Amati betapa sedikit yang berubah.",
+        "Rata-rata: total / len(durasi) — cetak dengan f-string dan pembulatan (round()).",
+        "Tantangan: cari POSISI (indeks) request terlambat — simpan i saat left di-update, bukan cuma nilainya.",
+      ],
+      hint: "Untuk menyimpan indeks: if right > left: left = right; idx_terbesar = i. Nilai dan posisi sama-sama berguna — log analisis nyata selalu butuh 'di mana'.",
+    },
+    quiz: [
+      {
+        q: "Kenapa perlu pengaman `if next_index < len(var_arr)` pada pemrosesan sekuensial current/next?",
+        options: [
+          "Supaya kode terlihat profesional",
+          "Karena elemen terakhir tidak punya suksesor — tanpa pengaman, akses arr[i+1] di elemen terakhir = IndexError",
+          "Karena range() tidak boleh dipakai",
+          "Supaya loop lebih cepat",
+        ],
+        answer: 1,
+        why: "Saat i adalah indeks terakhir (n-1), next_index = n berada di luar rentang valid 0..n-1. Pengaman mengganti next dengan None — perilaku eksplisit, bukan crash.",
+      },
+      {
+        q: "Pada algoritma two pointers pencarian terbesar, pointer left berperan...",
+        options: [
+          "Menunjuk elemen pertama selamanya",
+          "Menyimpan kandidat terbesar sejauh ini — diperbarui tiap kali right lebih besar",
+          "Menghitung jumlah elemen",
+          "Menyimpan indeks terkecil",
+        ],
+        answer: 1,
+        why: "Left = best-so-far: mulai dari elemen pertama, lalu selalu berpindah saat ada elemen yang lebih besar. Setelah satu pass penuh, left pasti memegang nilai terbesar.",
+      },
+      {
+        q: "Pemrosesan sekuensial mengharuskan...",
+        options: [
+          "Array diurutkan dulu",
+          "Elemen diproses berurutan dari indeks terkecil (0) ke terbesar (n-1), biasanya lewat loop",
+          "Semua elemen diproses bersamaan",
+          "Hanya elemen genap diproses",
+        ],
+        answer: 1,
+        why: "Sekuensial = berurutan sesuai indeks, dari 0 sampai n-1 — konsisten dengan aksi sekuensial (py-05) yang diterapkan pada struktur data. Tidak perlu terurut nilainya; yang berurutan adalah PROSESNYA.",
+      },
+      {
+        q: "Untuk mengubah elemen array saat loop, gaya loop yang paling tepat adalah...",
+        options: [
+          "for x in arr: (hanya memberi nilai)",
+          "for i in range(len(arr)): (memberi indeks, bisa tulis arr[i] = ...)",
+          "while True: selalu",
+          "for tidak bisa mengubah elemen",
+        ],
+        answer: 1,
+        why: "Gaya indeks memberi posisi sehingga arr[i] bisa DITULIS ulang. for x in arr hanya membaca salinan nilai — mengubah x tidak mengubah array. Pilih gaya sesuai kebutuhan: baca = nilai, ubah/posisi = indeks.",
+      },
+    ],
+  },
+  {
+    slug: "py-22",
+    tid: "6432",
+    title: "Matriks: Array Dua Dimensi",
+    minutes: 12,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/6432" },
+    untukApa: [
+      "Array 1D menyimpan garis data. Tapi spreadsheet, pixel gambar, jadwal kelas, dan grid game semuanya BERBENTUK TABEL — baris dan kolom. Strukturnya: matriks.",
+      "Matriks adalah pintu menuju data science (dataset = tabel) dan game/grid. Nested loop dari py-17 akhirnya ketemu guna sebenarnya di sini.",
+    ],
+    sections: [
+      {
+        h: "Dari matematika ke pemrograman",
+        p: [
+          "Di matematika, matriks = kumpulan bilangan tersusun baris dan kolom. Contoh jenisnya: matriks pengukuran (float, elemen (i,j) = hasil ukur di titik koordinat) dan matriks satuan (0/1, integer).",
+          "Di pemrograman: matriks = tabel 2 dimensi, diimplementasikan dengan NESTED LIST — list di dalam list:",
+        ],
+        code: 'matriks = [[1, 2, 3],\n           [4, 5, 6],\n           [7, 8, 9]]\n\n# kurung luar = matriks; tiap list dalam = satu BARIS',
+      },
+      {
+        h: "Indeks ganda: [baris][kolom]",
+        p: [
+          "Akses elemen matriks butuh DUA indeks: pertama pilih baris, kedua pilih kolom dalam baris itu:",
+        ],
+        code: 'matriks = [[1, 2, 3],\n           [4, 5, 6]]\n\nprint(matriks[0])      # [1, 2, 3]  -> baris pertama (sebuah list!)\nprint(matriks[0][0])   # 1          -> baris 0, kolom 0\nprint(matriks[1][2])   # 6          -> baris 1, kolom 2\nprint(len(matriks))        # 2 (jumlah baris)\nprint(len(matriks[0]))     # 3 (jumlah kolom)',
+        callout:
+          "Di matematika baris dimulai dari 1; di pemrograman indeks mulai 0. Elemen 'baris 2 kolom 3' versi matematika = matriks[1][2] versi Python. Salah hitung satu = akses salah seluruhnya.",
+      },
+      {
+        h: "Kenapa nested list, bukan tipe khusus?",
+        p: [
+          "Python tidak punya tipe 'matriks' bawaan — ia hanya menyusun list di dalam list, karena list bersifat mutable dan bisa menampung apa pun (termasuk list lain). Semua operasi matriks (jumlah, kali, transpose) nanti dibangun di atas nested loop yang sudah kamu kuasai.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Peta dungeon 3x3",
+      intro: "Matriks sebagai peta grid — konsep yang persis dipakai game dan image processing.",
+      steps: [
+        "Buat file peta.py: peta = [[1,0,0],[0,1,0],[0,0,1]] — 1 = player, 0 = ruang kosong.",
+        "Cetak seluruh peta: for baris in peta: print(baris) — lihat bentuk gridnya.",
+        "Cetak tiap sel dengan label: for i in range(len(peta)): for j in range(len(peta[0])): print(f'({i},{j}) = {peta[i][j]}').",
+        "Pindahkan player: cari sel bernilai 1, ubah jadi 0, lalu set peta[2][0] = 1 (list mutable!).",
+        "Cetak ulang — player pindah grid.",
+        "Hitung jarak: berapa sel terjauh dari (0,0)? (jawab: (2,2) — butuh 4 langkah).",
+      ],
+      hint: "Langkah 4 melatih kombinasi mutasi + pencarian: loop sel, if peta[i][j] == 1, simpan posisinya, lalu nol-kan — pola 'temukan lalu ubah' yang dipakai di mana-mana.",
+    },
+    quiz: [
+      {
+        q: "matriks = [[1,2,3],[4,5,6]] — berapa jumlah baris dan kolomnya?",
+        options: ["2 baris, 3 kolom", "3 baris, 2 kolom", "6 baris, 1 kolom", "1 baris, 6 kolom"],
+        answer: 0,
+        why: "Panjang list luar = jumlah BARIS (2), panjang tiap list dalam = jumlah KOLOM (3). Bentuknya NxM = 2x3. Matriks diimplementasikan sebagai list of row-lists.",
+      },
+      {
+        q: "Cara benar mengakses elemen '6' pada [[1,2,3],[4,5,6]] adalah...",
+        options: ["matriks[2][1]", "matriks[1][2]", "matriks[1,2]", "matriks(1)(2)"],
+        answer: 1,
+        why: "Indeks ganda berurutan: [1] pilih baris kedua ([4,5,6]), lalu [2] pilih elemen ketiga di baris itu = 6. Sintaks koma matriks[1,2] adalah NumPy, bukan list murni.",
+      },
+      {
+        q: "Baris ke-2 kolom ke-3 dalam notasi matematika (mulai dari 1) setara dengan indeks Python...",
+        options: ["[2][3]", "[1][2]", "[3][2]", "[1][3]"],
+        answer: 1,
+        why: "Konversi 1-based (matematika) ke 0-based (Python): kurangi satu tiap dimensi. Baris 2 → indeks 1, kolom 3 → indeks 2. Salah konversi ini sumber bug paling umum saat campur sumber materi.",
+      },
+      {
+        q: "Mengapa matriks di Python diimplementasikan sebagai nested list?",
+        options: [
+          "Karena Python tidak punya tipe matriks bawaan dan list mutable bisa menampung list lain",
+          "Karena nested list lebih cepat dari tipe matriks",
+          "Karena matematika mewajibkannya",
+          "Karena nested list tidak butuh indeks",
+        ],
+        answer: 0,
+        why: "List adalah struktur universal yang mutable dan heterogen — list di dalam list gratis didapat tanpa tipe baru. Semua perilaku matriks (akses [i][j], mutasi, loop 2D) dibangun di atasnya; NumPy nanti menyediakan versi teroptimasi.",
+      },
+    ],
+  },
+  {
+    slug: "py-23",
+    tid: "6435",
+    title: "Implementasi Matriks: Deklarasi & Akses",
+    minutes: 12,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/6435" },
+    untukApa: [
+      "Sama seperti array 1D: kadang isinya sudah tahu (tulis langsung), kadang belum (siapkan grid default dulu). Membuat grid NxM kosong dengan benar adalah skill yang langsung dipakai di setiap operasi matriks.",
+      "Ada jebakan terkenal di sini: cara mem-buat default yang SALAH membuat semua baris jadi satu objek yang sama. Ini salah satu bug Python paling legendaris.",
+    ],
+    sections: [
+      {
+        h: "Cara 1: deklarasi + isi langsung",
+        p: [
+          "Kalau nilainya diketahui, tulis langsung — contoh ini matriks satuan 5x5 (elemen 0 dan 1):",
+        ],
+        code: 'matriks = [[1, 0, 0, 0, 0],\n           [0, 1, 0, 0, 0],\n           [0, 0, 1, 0, 0],\n           [0, 0, 0, 1, 0],\n           [0, 0, 0, 0, 1]]\nprint(matriks)',
+      },
+      {
+        h: "Cara 2: default dengan nested comprehension",
+        p: [
+          "Untuk grid NxM kosong, pakai nested comprehension: for dalam membuat SATU BARIS, for luar menggandakan baris sebanyak n:",
+        ],
+        code: 'n, m = 3, 4   # 3 baris, 4 kolom\n\nmatriks = [[0 for j in range(m)] for i in range(n)]\nprint(matriks)\n# [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]',
+      },
+      {
+        p: [
+          "Baca dari dalam ke luar: [0 for j in range(m)] = satu baris berisi m nol; for i in range(n) = ulang n kali. Update elemen persis seperti 1D, tinggal dua indeks:",
+        ],
+        code: 'matriks[1][2] = 7\nprint(matriks[1])   # [0, 0, 7, 0]',
+      },
+      {
+        h: "Jebakan legendaris: [[0]*m]*n",
+        p: [
+          "Cara singkat [[0]*m]*n TERLIHAT benar tapi berbahaya: ia menduplikasi REFERENSI baris yang sama — ubah satu sel, seluruh baris ikut berubah:",
+        ],
+        code: 'salah = [[0]*4]*3\nsalah[0][0] = 9\nprint(salah)\n# [[9, 0, 0, 0], [9, 0, 0, 0], [9, 0, 0, 0]]  <- SEMUA baris berubah!\n\nbenar = [[0 for j in range(4)] for i in range(3)]\nbenar[0][0] = 9\nprint(benar)\n# [[9, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]  <- hanya baris 0',
+        callout:
+          "Karena * pada list mereplikasi referensi (ingat replikasi di py-08), ketiga baris adalah objek YANG SAMA. List comprehension membuat baris BARU tiap iterasi — itulah cara yang aman.",
+      },
+    ],
+    lab: {
+      title: "Bukti jebakan + papan catur 4x4",
+      intro: "Reproduksi bug legendaris lalu bangun grid yang benar — pelajaran yang tidak akan pernah dilupakan.",
+      steps: [
+        "Mode interaktif: salah = [[0]*3]*3 lalu salah[0][0] = 9 — cetak, amati semua baris berubah.",
+        "Buktikan penyebabnya: salah[0] is salah[1] — hasil True (objek yang sama!).",
+        "Sekarang benar: benar = [[0 for j in range(3)] for i in range(3)], ubah benar[0][0] = 9 — hanya satu sel.",
+        "Buat file papan.py: papan 4x4 default '.', isi papan[1][1] = 'P' (player) dan papan[3][2] = 'X' (musuh).",
+        "Cetak papan baris per baris dengan join: for baris in papan: print(' '.join(baris)) — hasilnya grid rapi.",
+        "Hitung total sel: rows*cols dari len() — tanpa hardcode angka.",
+      ],
+      hint: "Operator `is` membandingkan IDENTITAS objek (alamat memori), bukan nilai. True pada salah[0] is salah[1] adalah bukti langsung replikasi referensi oleh *.",
+    },
+    quiz: [
+      {
+        q: "Bentuk nested comprehension yang benar untuk grid 3 baris x 4 kolom default 0:",
+        options: [
+          "[[0 for j in range(4)] for i in range(3)]",
+          "[[0] * 4] * 3",
+          "[0 for j in range(3)] for i in range(4)",
+          "[[0 for i in range(3)] for j in range(4)]",
+        ],
+        answer: 0,
+        why: "Baris = for dalam dengan range kolom (4); pengulangan baris = for luar dengan range baris (3). Opsi B replikasi referensi (bug terkenal); C sintaks salah; D terbalik ukurannya (3 kolom, 4 baris).",
+      },
+      {
+        q: "grid = [[0]*4]*3 lalu grid[0][0] = 9. Apa yang terjadi?",
+        options: [
+          "Hanya grid[0][0] berubah",
+          "Seluruh baris pertama berubah",
+          "Ketiga baris berubah — ketiganya referensi ke objek list yang sama",
+          "Error karena list tidak bisa diubah",
+        ],
+        answer: 2,
+        why: "* pada list mereplikasi referensi, bukan menyalin isi. Ketiga 'baris' adalah SATU objek yang sama — mutasi lewat pintu mana pun terlihat di semua baris. Solusi: list comprehension.",
+      },
+      {
+        q: "matriks berisi n baris. Ekspresi yang menghitung jumlah KOLOM adalah...",
+        options: ["len(matriks)", "len(matriks[0])", "len(matriks[n])", "matriks.cols"],
+        answer: 1,
+        why: "matriks[0] adalah baris pertama (sebuah list), dan len-nya = jumlah kolom. len(matriks) memberi jumlah baris. Asumsi wajar: semua baris sama panjang (matriks regular).",
+      },
+    ],
+  },
+  {
+    slug: "py-24",
+    tid: "10737",
+    title: "Operasi Matriks: Konstanta, Total & Transpose",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/10737" },
+    untukApa: [
+      "Operasi matriks adalah tempat semua skillmu bertemu: nested loop (py-17), indexing ganda (py-22), dan grid default (py-23). Kalau tiga-tiganya lancar, lesson ini terasa seperti review.",
+      "Skala semua elemen, jumlahkan grid, dan transpose adalah operasi nyata: image filter, skor matiks, dan persiapan data ML semuanya bentuk dari ini.",
+    ],
+    sections: [
+      {
+        h: "Operasi 1 matriks vs 2 matriks",
+        p: [
+          "Operasi matriks terbagi dua keluarga: satu matriks (total semua elemen, kali konstanta, transpose, determinan) dan dua matriks (penjumlahan, perkalian). Hari ini fokus keluarga pertama — semuanya dibangun dari nested loop:",
+        ],
+        code: 'var_mat = [[5, 0],\n           [1, -2]]\n\ndef_mat = [[0 for j in range(2)] for i in range(2)]   # wadah hasil\n\nfor i in range(len(var_mat)):          # baris\n    for j in range(len(var_mat[0])):   # kolom\n        def_mat[i][j] = var_mat[i][j] * 2\n\nprint(def_mat)   # [[10, 0], [2, -4]]',
+      },
+      {
+        p: [
+          "Pola tiga langkah yang berulang: (1) wadah hasil ukuran sama, (2) loop i untuk baris, (3) loop j untuk kolom — olah var_mat[i][j], tulis ke def_mat[i][j].",
+        ],
+      },
+      {
+        h: "Total semua elemen (accumulator)",
+        p: [
+          "Total = pola akumulator dari py-21 yang dinaikkan satu dimensi — total dideklarasikan SEBELUM loop, ditambah di loop paling dalam:",
+        ],
+        code: 'var_mat = [[5, 0], [1, -2]]\ntotal = 0\nfor i in range(len(var_mat)):\n    for j in range(len(var_mat[0])):\n        total += var_mat[i][j]\n\nprint(total)   # 4',
+      },
+      {
+        h: "Transpose: baris jadi kolom",
+        p: [
+          "Transpose membalik dimensi: elemen [i][j] pindah ke [j][i]. Baris pertama menjadi kolom pertama — berguna di statistik dan persiapan data:",
+        ],
+        code: 'var_mat = [[5, 0],\n           [1, -2]]\n\ntrans = [[0 for j in range(len(var_mat))] for i in range(len(var_mat[0]))]\n\nfor i in range(len(var_mat)):\n    for j in range(len(var_mat[0])):\n        trans[j][i] = var_mat[i][j]   # PERHATIKAN: indeks dibalik\n\nprint(trans)   # [[5, 1], [0, -2]]',
+        callout:
+          "Kunci transpose cuma satu baris: trans[j][i] = var_mat[i][j] — posisi tujuan terbalik dari sumber. Semua operasi matriks lain (penjumlahan dua matriks, perkalian) mengikuti pola loop yang sama dengan rumus berbeda.",
+      },
+    ],
+    lab: {
+      title: "Skor tim + transpose papan",
+      intro: "Dua operasi dalam konteks nyata: statistik skor dan pembalikan grid.",
+      steps: [
+        "Buat file skor.py: skor = [[80, 90, 70], [60, 85, 95]] — baris = tim, kolom = ronde.",
+        "Total semua: pakai pola accumulator — cetak hasilnya (480).",
+        "Rata-rata per tim: for i, hitung sum baris / panjang baris — cetak per tim.",
+        "Skor tertinggi: best-so-far dua dimensi — simpan nilai DAN posisinya (i, j).",
+        "Buat file transpose.py: transpose matriks skor — baris jadi ronde, kolom jadi tim.",
+        "Cek makna: setelah transpose, baris pertama = skor SEMUA tim di ronde pertama — data yang sama, sudut pandang baru.",
+      ],
+      hint: "Rata-rata per tim cukup satu loop (i) karena sum per baris: sum(skor[i]) / len(skor[i]). Fungsi sum() bawaan menggantikan accumulator manual — boleh dipakai setelah kamu paham cara kerjanya.",
+    },
+    quiz: [
+      {
+        q: "Tiga langkah standar operasi 'satu matriks menghasilkan matriks baru' adalah...",
+        options: [
+          "Import library, deklarasi, print",
+          "Buat wadah hasil ukuran sama -> loop baris (i) -> loop kolom (j), olah sumber tulis ke hasil",
+          "Loop saja tanpa wadah hasil",
+          "Konversi ke string dulu",
+        ],
+        answer: 1,
+        why: "Wadah hasil (grid default dari py-23) menampung output; nested loop mengunjungi tiap sel; rumus operasi menentukan isi. Pola ini identik untuk kali-konstanta, penjumlahan matriks, dan transpose.",
+      },
+      {
+        q: "var_mat = [[5,0],[1,-2]] dikali konstanta 2 menghasilkan...",
+        options: ["[[10, 0], [2, -4]]", "[[7, 2], [3, 0]]", "[[10, 0, 2, -4]]", "Error"],
+        answer: 0,
+        why: "Kali konstanta mengalikan SETIAP elemen: 2x5=10, 2x0=0, 2x1=2, 2x(-2)=-4 — ukuran matriks tetap 2x2. Bandingkan dengan penjumlahan dua matriks yang mengoperasikan pasangan elemen seposisi.",
+      },
+      {
+        q: "Inti dari transpose adalah...",
+        options: [
+          "Mengalikan semua elemen dengan -1",
+          "Menukar posisi baris dan kolom: elemen [i][j] pindah ke [j][i]",
+          "Mengurutkan elemen dari kecil ke besar",
+          "Menghapus kolom terakhir",
+        ],
+        answer: 1,
+        why: "Transpose = refleksi terhadap diagonal: trans[j][i] = matriks[i][j]. Baris jadi kolom dan sebaliknya; matriks 2x3 menjadi 3x2. Satu baris pembeda dari loop biasa: indeks tujuan dibalik.",
+      },
+      {
+        q: "total += var_mat[i][j] ditaruh di loop PALING DALAM karena...",
+        options: [
+          "Agar kode lebih pendek",
+          "Karena ia harus menjangkau SETIAP sel — loop dalam berjalan paling sering (n_baris × n_kolom kali)",
+          "Karena Python mewajibkannya di sana",
+          "Supaya total tidak berubah",
+        ],
+        answer: 1,
+        why: "Akumulator harus dieksekusi sekali per sel. Loop paling dalam adalah satu-satunya tempat yang dieksekusi n_baris × n_kolom kali — taruh di luar, total hanya menjumlah barisnya saja.",
+      },
+    ],
+  },
 ];
