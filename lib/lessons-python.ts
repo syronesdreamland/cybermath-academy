@@ -568,4 +568,639 @@ export const PYTHON_LESSONS: Lesson[] = [
       },
     ],
   },
+  {
+    slug: "py-07",
+    tid: "4751",
+    title: "Variabel & Assignment",
+    minutes: 12,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4751" },
+    untukApa: [
+      "Di lesson sebelumnya data langsung dipakai lalu hilang. Program nyata perlu MENGINGAT: nama target, host, jumlah percobaan — semuanya disimpan di variabel.",
+      "Formula assignment yang salah (nilai di kiri, variabel di kanan) adalah error klasik pemula hari pertama — kenali aturannya sekali, selamanya.",
+    ],
+    sections: [
+      {
+        h: "Variabel = tempat penyimpanan bernama",
+        p: [
+          "Variabel adalah lokasi di memori komputer yang kamu beri nama untuk menyimpan nilai. Saat kamu menulis variabel, komputer memesan ruang dan mengisinya. Tujuannya: nilai yang sama bisa dipakai BERULANG tanpa menulis ulang.",
+        ],
+        code: 'print("Halo, Budi!")\nprint("Halo, Budi!")\nprint("Halo, Budi!")\n\n# vs. dengan variabel:\nnama = "Budi"\nprint(f"Halo, {nama}!")\nprint(f"Halo, {nama}!")\nprint(f"Halo, {nama}!")\n\n# Kalau target berubah jadi Ani, cukup ubah SATU baris.',
+      },
+      {
+        h: "Formula assignment",
+        p: [
+          "Assignment = proses memberi nilai ke variabel. Aturannya satu dan kaku:",
+        ],
+        code: '<variabel> = <ekspresi / nilai / variabel yang sudah jelas nilainya>\n\n# Benar:\ngreeting = "Hello World!"   # kiri: variabel; kanan: nilai\n\n# Salah — SyntaxError:\n"Hello World!" = greeting   # kiri bukan variabel',
+      },
+      {
+        p: [
+          "Ruas kanan DIEKSEKUSI DULU, hasilnya disimpan ke ruas kiri. Karena itu assignment bisa berantai:",
+        ],
+      },
+      {
+        h: "Assignment berantai (chaining)",
+        code: 'addition = 2 + 2        # kanan dieksekusi: 4 -> disimpan ke addition\nresult = addition - 1   # kanan dieksekusi: 4 - 1 = 3 -> disimpan ke result\n\nprint(result)   # 3',
+        callout:
+          "Cara baca '=' di Python BUKAN 'sama dengan' (itu matematika), tapi 'DIISI DENGAN'. result = result + 1 terdengar mustahil di matematika, tapi wajar di Python: kanan dihitung dulu, lalu hasilnya mengisi ulang result.",
+      },
+    ],
+    lab: {
+      title: "Profil dalam variabel",
+      intro: "Bangun program kecil yang menyimpan beberapa data lalu menampilkannya — pondasi semua program berikutnya.",
+      steps: [
+        "Buat file profil.py.",
+        "Simpan data di variabel: nama = \"Alif\", umur = 21, hobi = \"cybersecurity\".",
+        "Cetak dengan f-string: print(f\"{nama}, {umur} tahun, suka {hobi}\").",
+        "Tambah: umur = umur + 1 lalu cetak lagi — perhatikan nilai berupa 'diisi ulang'.",
+        "Tantangan: tulis umur += 1 (shortcut yang akan dibahas di lesson operator) — hasilnya sama.",
+        "Coba baris rusak: 5 = umur. Baca error-nya — ruas kiri harus variabel.",
+      ],
+      hint: "Error di langkah terakhir: SyntaxError cannot assign to literal — angka 5 bukan lokasi penyimpanan, jadi tidak bisa 'diisi'.",
+    },
+    quiz: [
+      {
+        q: "Manakah assignment yang BENAR?",
+        options: ["25 = umur", "umur = 25", "umur == 25 (untuk menyimpan)", "25 == umur"],
+        answer: 1,
+        why: "Assignment menuntut variabel di ruas kiri dan nilai di ruas kanan. 'umur == 25' adalah operator perbandingan (menghasilkan boolean), bukan penyimpanan nilai.",
+      },
+      {
+        q: "x = 5 lalu x = x + 3. Berapa nilai x sekarang dan kenapa?",
+        options: [
+          "5 — nilai pertama tidak bisa berubah",
+          "8 — ruas kanan dihitung dulu (5+3), lalu hasilnya mengisi ulang x",
+          "Error karena x muncul di dua ruas",
+          "53 karena angka digabung",
+        ],
+        answer: 1,
+        why: "Eksekusi sekuensial: baris kedua mengeksekusi kanan dulu (x bernilai 5, 5+3=8), hasilnya mengisi ulang x. Membaca '=' sebagai 'diisi dengan' membuat pola ini masuk akal.",
+      },
+      {
+        q: "Apa keuntungan utama menyimpan data ke variabel sebelum dipakai?",
+        options: [
+          "Program jalan lebih cepat tanpa exception",
+          "Nilai bisa dipakai berulang dan cukup diubah di satu tempat",
+          "Variabel membuat kode tidak perlu diuji",
+          "Python mewajibkannya untuk print",
+        ],
+        answer: 1,
+        why: "Variabel memberi nama pada data: reusable, dan saat data berubah cukup edit satu baris assignment — bukan menyisipkan nilai baru di banyak tempat (sumber bug klasik).",
+      },
+    ],
+  },
+  {
+    slug: "py-08",
+    tid: "4754",
+    title: "Ekspresi & Abstraksi Data",
+    minutes: 12,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4754" },
+    untukApa: [
+      "Setiap perhitungan, perbandingan, dan manipulasi data di programmu adalah 'ekspresi'. Paham strukturnya = bisa membaca (dan menulis) kode apa pun tanpa menebak.",
+      "Abstraksi data menjawab pertanyaan fundamental: kenapa komputer 'tidak paham' angka 60 mu sampai kamu menyebut tipenya.",
+    ],
+    sections: [
+      {
+        h: "Ekspresi = kombinasi yang menghasilkan nilai",
+        p: [
+          "Ekspresi adalah kombinasi dari variabel, konstanta, operator, dan/atau fungsi yang bermakna untuk MENGHASILKAN satu nilai dengan tipe tertentu. Bentuk paling umum (ekspresi biner):",
+        ],
+        code: '<operan1> <operator> <operan2>\n\n# contoh:\n# 2 + 2          -> 4\n# x - y          -> hasil selisih\n# "py" + "thon"  -> "python"\n# 3 < 10         -> True',
+      },
+      {
+        p: [
+          "Operan bisa berupa nilai, variabel, konstanta, bahkan ekspresi lain (yang dievaluasi dulu). Operator adalah fungsi standar bahasa: aritmetika (+, -, *), relasional (<, ==), logika (and, not), dan seterusnya.",
+        ],
+      },
+      {
+        h: "Operator yang sama, perilaku beda per tipe",
+        p: [
+          "Fakta menarik: + dan * tidak hanya untuk angka. Pada list dan string, + berarti GABUNG dan * berarti REPLIKASI:",
+        ],
+        code: 'angka = [2, 4, 6, 8]\nhuruf = ["P", "Y", "T", "H", "O", "N"]\ngabung = angka + huruf\nprint(gabung)      # [2, 4, 6, 8, \'P\', \'Y\', \'T\', \'H\', \'O\', \'N\']\n\nlearn = ["P", "Y"]\nprint(learn * 3)   # [\'P\', \'Y\', \'P\', \'Y\', \'P\', \'Y\']',
+        callout:
+          "Inilah konsekuensi tipe: operator punya makna tergantung tipe operannya. + pada angka = hitung; + pada string/list = sambung. Mencampur tanpa konversi ('angka: ' + 5) = TypeError.",
+      },
+      {
+        h: "Abstraksi data: konteks menentukan makna",
+        p: [
+          "Angka 60 saja tidak mewakili apa pun: suhu? berat? umur? Begitu ditulis 60°C, maknanya jelas — karena ada KONTEKS. Kemampuan mengikat konteks ke data disebut abstraksi data.",
+          "Komputer juga begitu, tapi lebih kaku: ia TIDAK akan tahu maksud datamu sampai kamu menyebut tipe datanya. 60 sebagai int bisa dihitung; \"60\" sebagai string bisa disambung ke teks — dua objek berbeda meski terlihat sama.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Eksperimen operator lintas tipe",
+      intro: "Buktikan sendiri bahwa tipe operan mengubah perilaku operator.",
+      steps: [
+        "Buka mode interaktif: python.",
+        "Jalankan: 2 + 3 lalu \"2\" + \"3\" — bandingkan hasilnya (5 vs \"23\").",
+        "Coba campur: \"2\" + 3 — baca TypeError yang muncul.",
+        "Jalankan: [1, 2] * 2 dan \"ab\" * 2 — replikasi bekerja pada keduanya.",
+        "Coba [1, 2] + 3 — error: list hanya bisa digabung dengan list.",
+        "Kesimpulan yang harus nempel: sebelum operasi, selalu sadar tipe kedua operanmu.",
+      ],
+      hint: "Solusi campur tipe: konversi eksplisit — int(\"2\") + 3 = 5, atau \"2\" + str(3) = \"23\".",
+    },
+    quiz: [
+      {
+        q: "Hasil dari ekspresi \"py\" + \"thon\" adalah...",
+        options: [
+          "Error — + hanya untuk angka",
+          "\"python\" — + pada string berarti penyambungan",
+          "\"py thon\"",
+          "NaN",
+        ],
+        answer: 1,
+        why: "Makna operator bergantung tipe operan. Pada string, + berarti konkatenasi (penyambungan). Pada angka ia berarti penjumlahan.",
+      },
+      {
+        q: "Dalam ekspresi biner x - y, istilah 'operan' merujuk pada...",
+        options: [
+          "Tanda minus",
+          "x dan y — nilai yang dioperasikan",
+          "Hasil pengurangan",
+          "Tipe data x",
+        ],
+        answer: 1,
+        why: "Struktur biner = dua operan yang dihubungkan satu operator. Operan adalah bahan baku (nilai/variabel/ekspresi), operator adalah aksinya, hasilnya satu nilai baru.",
+      },
+      {
+        q: "Kenapa komputer 'tidak paham' maksud angka 60 sampai tipenya disebut?",
+        options: [
+          "Karena komputer tidak bisa membaca angka",
+          "Karena tipe data memberi konteks: int 60 bisa dihitung, string \"60\" bisa disambung — perilakunya berbeda",
+          "Karena 60 terlalu besar untuk memori",
+          "Karena Python mewajibkan semua data diberi nama",
+        ],
+        answer: 1,
+        why: "Abstraksi data: makna lahir dari konteks. Tipe data adalah konteks yang dikenali mesin — menentukan operasi apa yang sah dan apa hasilnya (60 + 60 = 120, tapi \"60\" + \"60\" = \"6060\").",
+      },
+    ],
+  },
+  {
+    slug: "py-09",
+    tid: "4755",
+    title: "Jenis-Jenis Ekspresi",
+    minutes: 12,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4755" },
+    untukApa: [
+      "x += 1, not x, 3 < 10 — semuanya ekspresi, tapi kelompoknya beda dan hasilnya beda tipe. Salah paham kelompok ini = salah baca kondisi if nanti.",
+      "Klasifikasi ini akan kamu pakai setiap hari: ekspresi relasional & logika adalah bahan baku semua percabangan di fase berikutnya.",
+    ],
+    sections: [
+      {
+        h: "Klasifikasi #1: menurut jumlah operan (arity)",
+        table: {
+          head: ["Jenis", "Bentuk", "Contoh"],
+          rows: [
+            ["Biner", "dua operan", "x + y, x == y, x % y, x ** y"],
+            ["Uner", "satu operan", "x += 1, x -= 1, not x, -x"],
+          ],
+        },
+        p: [
+          "x += 1 adalah shorthand dari x = x + 1 (increment); x -= 1 kebalikannya (decrement). not x membalik nilai kebenaran; -x membalik tanda.",
+        ],
+        code: "a = True\na = not a          # False\n\nb = 6\nb -= 1             # 5\nc = 6\nc += 1             # 7\n\nd = 10\nprint(-d)          # -10",
+      },
+      {
+        h: "Klasifikasi #2: menurut tipe data yang dihasilkan",
+        table: {
+          head: ["Jenis", "Pola", "Contoh"],
+          rows: [
+            ["Aritmetika", "numerik op numerik = numerik", "2 + 2 = 4"],
+            ["Relasional", "numerik op numerik = boolean", "3 < 10 = True"],
+            ["Logika", "boolean op boolean = boolean", "True or False = True"],
+          ],
+        },
+        callout:
+          "Yang paling sering salah dibaca pemula: relasional. Operannya angka, tapi HASILNYA boolean. 3 < 10 bukan 'angka kecil', melainkan pernyataan yang bernilai True — dan nilai True inilah yang nanti mengontrol if.",
+      },
+      {
+        h: "Kenapa klasifikasi ini penting",
+        p: [
+          "Saat membaca kondisi seperti `if umur >= 17 and punya_ktp:` kamu sedang membaca DUA ekspresi relasional (hasil boolean) yang digabung ekspresi logika (hasil boolean). Komposisi ini adalah pola dasar seluruh logika program — kuasai sekarang, fase control flow jadi hampir gratis.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Pemetaan ekspresi",
+      intro: "Latih matamu mengklasifikasi ekspresi — skill membaca kode yang dipakai terus-menerus.",
+      steps: [
+        "Buat file jenis.py.",
+        "Tulis dan tebak dulu hasilnya SEBELUM menjalankan: nilai = 10; print(nilai += 1)? — jangan dijalankan dulu: ini ERROR (assignment bukan ekspresi yang bisa dicetak).",
+        "Bentuk yang benar: nilai += 1 di baris sendiri, lalu print(nilai).",
+        "Cetak hasil klasifikasi: print(3 < 10) — relasional, hasil True.",
+        "print(not (3 < 10)) — logika di atas relasional, hasil False.",
+        "print(-7) — uner negasi. print(2 ** 3) — biner pangkat.",
+        "Terakhir: print(7 % 2 == 0) — baca pelan: modulo dulu (1), lalu relasional (1 == 0) → False. Ini pola cek bilangan genap!",
+      ],
+      hint: "Urutan evaluasi: operan dieksekusi dulu, operator menengah, lalu perbandingan/logika terakhir. Kalau ragu, bungkus sub-ekspresi dengan kurung.",
+    },
+    quiz: [
+      {
+        q: "Manakah yang merupakan ekspresi UNER?",
+        options: ["x + y", "x ** y", "not x", "x != y"],
+        answer: 2,
+        why: "Uner = satu operan. not x hanya bekerja pada satu nilai boolean dan membaliknya. Sisanya dua operan (biner).",
+      },
+      {
+        q: "x += 1 identik dengan...",
+        options: ["x = 1", "x = x + 1", "x == 1", "x + 1 saja (tanpa mengubah x)"],
+        answer: 1,
+        why: "Ini increment: shorthand assignment yang menambah variabel dengan jumlah tetap. Sama persis dengan x = x + 1 — kanan dihitung dulu, hasil mengisi ulang x.",
+      },
+      {
+        q: "3 < 10 adalah ekspresi relasional. Tipe data HASILNYA adalah...",
+        options: ["integer", "float", "boolean", "string"],
+        answer: 2,
+        why: "Pola relasional: numerik dibandingkan numerik menghasilkan BOOLEAN (True/False). Operannya angka, hasilnya kebenaran — inilah bahan baku if nanti.",
+      },
+      {
+        q: "True or False bernilai...",
+        options: ["True — or menghasilkan True jika SALAH SATU operan True", "False — or butuh keduanya True", "Error tipe data", "None"],
+        answer: 0,
+        why: "Operator logika or: True jika minimal satu operan True. Bandingkan with and yang menuntut KEDUANYA True. not yang membalik.",
+      },
+    ],
+  },
+  {
+    slug: "py-10",
+    tid: "32500",
+    title: "Tipe Data Primitif: Numbers, Boolean, String",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/32500" },
+    untukApa: [
+      "Tipe data = konteks yang kamu pelajari di py-08 — sekarang daftar lengkapnya. Memilih tipe yang tepat menentukan operasi apa yang boleh dilakukan datamu.",
+      "Dua properti 'immutable' dan 'falsy values' akan menjelaskan banyak perilaku aneh Python yang kalau tidak dijelaskan terasa seperti bug.",
+    ],
+    sections: [
+      {
+        h: "Peta tipe data Python",
+        p: [
+          "Tipe data Python terbagi dua kelompok besar: primitif (menyimpan satu nilai) dan collection (menyimpan banyak nilai — topik fase 9). Fokus sekarang: primitif.",
+        ],
+        table: {
+          head: ["Tipe", "Isi", "Contoh"],
+          rows: [
+            ["int", "bilangan bulat", "1, -20, 999, 0"],
+            ["float", "bilangan riil / desimal", "3.14, 1.0, 4.01E+1"],
+            ["complex", "bilangan kompleks (jarang dipakai)", "1+2j"],
+            ["bool", "kebenaran", "True, False"],
+            ["str", "urutan karakter", "\"Dicoding\", \'a\', teks multi-baris"],
+          ],
+        },
+        code: 'x = 6\nprint(type(x))   # <class \'int\'>\nx = 6.0\nprint(type(x))   # <class \'float\'>\nx = "enam"\nprint(type(x))   # <class \'str\'>',
+      },
+      {
+        h: "Immutable: tidak bisa diubah, hanya diganti",
+        p: [
+          "Semua tipe primitif bersifat immutable. Inisialisasi ulang variabel BUKAN mengubah nilai lama — Python membuat objek baru. Buktinya lewat alamat memori:",
+        ],
+        code: 'var = 10\nprint(id(var))   # alamat memori A\nvar = 11\nprint(id(var))   # alamat BERUBAH -> objek baru, bukan nilai lama diubah',
+      },
+      {
+        p: [
+          "String paling jelas: ia urutan karakter berindeks (mulai 0), bisa dibaca per karakter, tapi TIDAK bisa ditulis ulang per karakter:",
+        ],
+        code: 's = "Dicoding"\nprint(s[0])    # D  (indexing, mulai dari 0)\nprint(s[2:])   # coding (slicing: dari indeks 2 sampai akhir)\n\ns[0] = "F"     # TypeError: \'str\' object does not support item assignment',
+      },
+      {
+        callout:
+          "Solusi ubah string: buat string BARU — s = \"F\" + s[1:]. Karena immutable, semua method string (lesson berikutnya) mengembalikan string baru, bukan mengubah yang lama.",
+      },
+      {
+        h: "Boolean & nilai falsy",
+        p: [
+          "bool hanya punya True dan False (perhatikan kapital — case-sensitive!). Menariknya, Python bisa mengevaluasi NILAI APA PUN sebagai kebenaran. Hanya beberapa nilai yang dianggap False (falsy):",
+        ],
+        list: [
+          "None dan False (yang memang didefinisikan salah)",
+          "Angka nol semua tipe: 0, 0.0, 0j",
+          "Koleksi kosong: \"\" (string kosong), (), {}, set(), range(0)",
+        ],
+        code: 'print(bool(0))      # False\nprint(bool(""))     # False\nprint(bool("hi"))   # True  (string non-kosong = truthy)\nprint(bool(-1))     # True  (angka selain nol = truthy)',
+        callout:
+          "Ini bukan teori kosong: if nama_input: adalah cara idiomatik mengecek 'apakah pengguna mengetik sesuatu' — string kosong otomatis dianggap False.",
+      },
+    ],
+    lab: {
+      title: "Type explorer + bukti immutable",
+      intro: "Investigasi tipe data langsung di mode interaktif — cara tercepat menjawab 'ini tipenya apa ya?' saat ngoding.",
+      steps: [
+        "Buka python interaktif.",
+        "Cek tipe: type(1), type(1.0), type(\"1\"), type(True) — perhatikan hasilnya berbeda semua.",
+        "Falsy hunt: bool(0), bool(0.0), bool(\"\"), bool(\"0\") — yang terakhir TRUE! \"0\" adalah string non-kosong.",
+        "Indexing: s = \"Security\"; coba s[0], s[-1] (indeks negatif = dari belakang), s[0:4].",
+        "Bukti immutable: s[0] = \"X\" — baca TypeError-nya.",
+        "Perbaiki dengan cara immutable-safe: s = \"X\" + s[1:] lalu cek s.",
+      ],
+      hint: "id() bisa menambah bukti: a = 10; print(id(a)); a = 11; print(id(a)) — alamat berubah karena objek baru dibuat.",
+    },
+    quiz: [
+      {
+        q: "type(1.0) menghasilkan...",
+        options: ["<class 'int'>", "<class 'float'>", "<class 'str'>", "<class 'bool'>"],
+        answer: 1,
+        why: "Yang menentukan tipe adalah NILAI, bukan cara menulisnya. Ada titik desimal = float, meski nilainya 'bulat' secara matematis. 1.0 ≠ 1 dari sudut pandang tipe.",
+      },
+      {
+        q: "s = \"Dicoding\" lalu s[0] = \"F\". Apa yang terjadi?",
+        options: [
+          "s menjadi \"Ficoding\"",
+          "Error — string immutable, tidak mendukung item assignment",
+          "s menjadi \"F\" + \"icoding\" otomatis",
+          "Huruf D hilang saja",
+        ],
+        answer: 1,
+        why: "String adalah urutan karakter yang immutable: bisa dibaca (s[0]) tapi tidak bisa ditulis ulang per posisi. Perubahan harus lewat objek baru, misal s = \"F\" + s[1:].",
+      },
+      {
+        q: "Manakah yang dievaluasi sebagai False (falsy)?",
+        options: ["\"0\"", "0.0", "\"kosong\"", "-1"],
+        answer: 1,
+        why: "Angka nol dari semua tipe numerik adalah falsy. Tiga lainnya justru TRUTHY: \"0\" dan \"kosong\" adalah string non-kosong, -1 adalah angka selain nol.",
+      },
+      {
+        q: "s = \"Python\". Apa hasil s[1:3]?",
+        options: ["\"Py\"", "\"yt\"", "\"yth\"", "\"th\""],
+        answer: 1,
+        why: "Slicing s[awal:akhir] mengambil dari indeks awal SAMPAI SEBELUM akhir. s[1:3] = indeks 1 dan 2 = 'y' dan 't'. Indeks selalu mulai 0, batas akhir eksklusif.",
+      },
+    ],
+  },
+  {
+    slug: "py-11",
+    tid: "4762",
+    title: "Operator: Aritmetika, Relasional, Logika",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4762" },
+    untukApa: [
+      "Tabel operator ini adalah perkakas yang kamu pakai di SETIAP program: hitung (aritmetika), bandingkan (relasional), gabungkan keputusan (logika).",
+      "Tiga operator Python sering mengejutkan pemula: // (pembagian bulat), % (sisa bagi — kunci cek genap/ganjil), dan perbandingan STRING yang memakai urutan unicode.",
+    ],
+    sections: [
+      {
+        h: "Operator aritmetika (x = 11, y = 5)",
+        table: {
+          head: ["Operator", "Nama", "Contoh", "Hasil"],
+          rows: [
+            ["+", "penjumlahan", "x + y", "16"],
+            ["-", "pengurangan", "x - y", "6"],
+            ["*", "perkalian", "x * y", "55"],
+            ["//", "pembagian bulat", "x // y", "2"],
+            ["/", "pembagian riil", "x / y", "2.2"],
+            ["%", "modulo (sisa bagi)", "x % y", "1"],
+            ["**", "pangkat", "x ** y", "161051"],
+          ],
+        },
+        callout:
+          "Bedakan // dan /: 11 // 5 = 2 (dibuang desimalnya), 11 / 5 = 2.2 (riil, hasilnya selalu float). Dan % memberi SISA: 11 dibagi 5 sisa 1 — pola cek genap: n % 2 == 0.",
+      },
+      {
+        h: "Operator relasional",
+        p: [
+          "Membandingkan dua operan, hasil selalu boolean. Pada angka (x=5, y=10): x == y False, x != y True, x > y False, x < y True, x >= y False, x <= y True.",
+          "Pada STRING, == dan != membandingkan isi, tapi < > membandingkan urutan UNICODE huruf pertama yang berbeda:",
+        ],
+        code: 'x = "Dicoding"\ny = "Indonesia"\nprint(x < y)   # True — huruf D (urutan unicode lebih rendah) vs I\n\nprint("apple" < "banana")   # True\nprint("abc" < "abd")        # True — banding berhenti di huruf yang beda',
+      },
+      {
+        h: "Operator logika",
+        table: {
+          head: ["Operator", "Aturan", "p=True, q=False"],
+          rows: [
+            ["and", "True jika KEDUA operan True", "p and q = False"],
+            ["or", "True jika SALAH SATU True", "p or q = True"],
+            ["not", "membalik nilai", "not p = False"],
+          ],
+        },
+        p: [
+          "Komposisi nyata: `umur >= 17 and punya_ktp` — dua relasional digabung logika. Program keputusan nyata hampir selalu bentuk ini.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Kalkulator tip + cek genap",
+      intro: "Gabungkan tiga keluarga operator dalam satu program yang masuk akal sehari-hari.",
+      steps: [
+        "Buat file tip.py.",
+        "total = int(input(\"Total bill: \")) dan orang = int(input(\"Jumlah orang: \")).",
+        "Hitung: per_orang = total // orang (pembagian bulat — rupiah utuh) dan sisa = total % orang (sisa yang tidak terbagi).",
+        "Cetak keduanya — cek dengan total 100000 dan 3 orang: per_orang 33333, sisa 1.",
+        "Tambah baris boolean: genap = total % 2 == 0 lalu print(f\"Total genap? {genap}\").",
+        "Tantangan logika: print(per_orang > 50000 and sisa == 0) — baca: mahal DAN tidak ada sisa.",
+        "Eksperimen string: print(\"b\" > \"a\"), lalu print(\"B\" > \"a\") — huruf KAPITAL unicode-nya lebih kecil! Ini penting saat membandingkan input pengguna.",
+      ],
+      hint: "Kenapa \"B\" > \"a\" False? Unicode huruf besar (65-90) lebih rendah dari huruf kecil (97-122). Saat membandingkan nama/username, normalisasi dulu: .lower() dari lesson berikutnya.",
+    },
+    quiz: [
+      {
+        q: "11 // 5 dan 11 % 5 masing-masing menghasilkan...",
+        options: ["2.2 dan 1", "2 dan 1", "1 dan 2", "2 dan 2.2"],
+        answer: 1,
+        why: "// = pembagian bulat (2, desimal dibuang); % = modulo = SISA pembagian: 11 = 5x2 + 1, sisanya 1. Keduanya sering dipakai berpasangan untuk memecah angka.",
+      },
+      {
+        q: "Cara paling idiomatik mengecek n bilangan genap:",
+        options: ["n // 2 == 0", "n % 2 == 0", "n / 2 == 0", "n ** 2 == 0"],
+        answer: 1,
+        why: "Genap = habis dibagi 2 = sisa bagi nol: n % 2 == 0. Perhatikan pola komposisinya: ekspresi aritmetika (n % 2) menghasilkan angka, dibandingkan relasional (== 0) menghasilkan boolean.",
+      },
+      {
+        q: "\"Dicoding\" < \"Indonesia\" menghasilkan True karena...",
+        options: [
+          "\"Dicoding\" lebih pendek",
+          "Huruf pertama yang berbeda dibandingkan lewat urutan unicode: D < I",
+          "Semua huruf D kecil dari I secara alfabet program",
+          "Python menghitung jumlah huruf",
+        ],
+        answer: 1,
+        why: "Perbandingan string memakai nilai unicode karakter, berhenti di huruf pertama yang berbeda. D (unicode 68) < I (73) → True. Panjang string tidak dipakai di sini.",
+      },
+      {
+        q: "p = True, q = False. Mana yang bernilai True?",
+        options: ["p and q", "not p", "p or q", "not (p or q)"],
+        answer: 2,
+        why: "or menghasilkan True jika minimal satu operan True — p saja sudah cukup. and menuntut keduanya (False), not p membalik jadi False, dan not(p or q) membalik True jadi False.",
+      },
+    ],
+  },
+  {
+    slug: "py-12",
+    tid: "32505",
+    title: "Transformasi String: Method Wajib",
+    minutes: 15,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/32505" },
+    untukApa: [
+      "Input pengguna berantakan: spasi ekstra, kapital acak. Data mentah harus dibersihkan dulu sebelum dipakai — dan pembersihannya adalah method-method string ini.",
+      "Ini payload harian programmer: dari parsing file log sampai normalisasi username. Kuasai 12 method ini, kamu sudah lebih produktif dari 90% pemula.",
+    ],
+    sections: [
+      {
+        h: "Mengubah huruf besar-kecil",
+        code: "kata = 'dicoding'\nprint(kata.upper())    # DICODING\nprint('DICODING'.lower())   # dicoding",
+        p: [
+          "Karakter non-huruf (angka, simbol) tidak berubah. Ingat lab py-11: .lower() adalah cara normalisasi sebelum membandingkan string.",
+        ],
+      },
+      {
+        h: "Menghapus whitespace: strip family",
+        code: "print(\"Dicoding     \".rstrip())   # hapus kanan\nprint(\"    Dicoding\".lstrip())   # hapus kiri\nprint(\"   Dicoding   \".strip())  # hapus kiri+kanan\n\n# strip bisa diberi argumen selain whitespace:\nprint('CodeCodeDicodingCodeCode'.strip(\"Code\"))   # Dicoding",
+      },
+      {
+        h: "Memisah & menggabung: split + join",
+        code: "print('Dicoding Indonesia !'.split())\n# ['Dicoding', 'Indonesia', '!']  -> hasilnya LIST\n\nprint(' '.join(['Dicoding', 'Indonesia', '!']))\n# Dicoding Indonesia !\n\n# split per baris untuk teks multi-line:\nprint('''baris satu\nbaris dua'''.split('\\n'))\n# ['baris satu', 'baris dua']",
+        callout:
+          "split dan join adalah pasangan kebalikan. split memecah string -> list; join menyambung list -> string. Delimiter bisa apa pun: spasi, koma, newline.",
+      },
+      {
+        h: "Mengecek & mengganti",
+        code: "print('Dicoding Indonesia'.startswith('Dicoding'))  # True\nprint('Dicoding Indonesia'.endswith('Dicoding'))    # False\n\ns = \"Ayo belajar Coding di Dicoding\"\nprint(s.replace(\"Coding\", \"Pemrograman\"))\n# Ayo belajar Pemrograman di Dicoding  — hanya \"Coding\" kapital\n\nprint('DICODING'.isupper())   # True\nprint('dicoding'.islower())   # True",
+        p: [
+          "replace() case-sensitive: 'Coding' dan 'coding' adalah dua kata berbeda baginya. Method is* (isupper, islower, dst) mengembalikan boolean — pasangan sempurna untuk if.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Pembersih input pengguna",
+      intro: "Simulasi nyata: input pengguna selalu kotor. Bersihkan dengan pipeline method.",
+      steps: [
+        "Buat file bersih.py.",
+        "Simulasi input kotor: raw = \"   aLiF AdiTyA  \".",
+        "Pipeline: clean = raw.strip().lower() lalu print(clean) — hasil: alif aditya.",
+        "Cek: print(clean.islower()) — True.",
+        "Cek awalan: print(clean.startswith(\"alif\")) — True.",
+        "Gabung balik: print(\"-\".join(clean.split())) — alif-aditya (slug! persis pola URL).",
+        "Tantangan: buat versi judul — setiap kata kapital awalnya, pakai .title() lalu verifikasi hasilnya.",
+      ],
+      hint: "Pipeline method bisa dirantai: raw.strip().lower().title() dieksekusi kiri ke kanan. Setiap method mengembalikan string BARU (immutable!) sehingga aman dirantai.",
+    },
+    quiz: [
+      {
+        q: "' Dicoding '.strip() menghasilkan...",
+        options: ["\"Dicoding\" — whitespace kiri dan kanan dihapus", "\"Dicoding  \" — hanya kiri", "\" Dicoding\" — hanya kanan", "Error"],
+        answer: 0,
+        why: "strip() tanpa argumen menghapus whitespace di KEDUA ujung. rstrip() hanya kanan, lstrip() hanya kiri. Isi di tengah tidak tersentuh.",
+      },
+      {
+        q: "'a,b,c'.split(',') menghasilkan...",
+        options: ["\"abc\"", "[\"a\", \"b\", \"c\"]", "[\"a,b,c\"]", "(\"a\", \"b\", \"c\")"],
+        answer: 1,
+        why: "split memecah string per delimiter dan mengembalikan LIST of substring. Kebalikannya, join menyambung list menjadi satu string dengan delimiter tertentu.",
+      },
+      {
+        q: "\"Dicoding\".replace(\"ding\", \"DING\") menghasilkan...",
+        options: [
+          "\"DicoDING\" — semua 'ding' diganti",
+          "\"Dicoding\" tidak berubah — tapi ingat, method string mengembalikan string BARU, jadi hasilnya \"DicoDING\" saat dicetak",
+          "Error karena string immutable",
+          "\"DicodingDING\"",
+        ],
+        answer: 1,
+        why: "replace mencari substring 'ding' (d kecil) dan menemukannya di 'co-ding' → \"DicoDING\". Karena immutable, hasil dikembalikan sebagai string baru — string asli tetap utuh kecuali kamu assign ulang.",
+      },
+      {
+        q: "Kenapa .lower() penting sebelum membandingkan input pengguna dengan nilai tetap?",
+        options: [
+          "Supaya string jadi lebih pendek",
+          "Karena perbandingan string case-sensitive: \"ALIF\" != \"alif\" secara unicode",
+          "Karena lower() menghapus spasi",
+          "Karena Python menolak huruf kapital",
+        ],
+        answer: 1,
+        why: "== membandingkan unicode per karakter; 'A' (65) ≠ 'a' (97). Normalisasi .lower() di kedua sisi membuat \"ALIF\" == \"alif\" setelah normalisasi — standar pembandingan input dunia nyata.",
+      },
+    ],
+  },
+  {
+    slug: "py-13",
+    tid: "4747",
+    title: "One-liner: Kode Satu Baris Python",
+    minutes: 10,
+    source: { label: SRC, url: "https://www.dicoding.com/academies/86/tutorials/4747" },
+    untukApa: [
+      "Python punya super-power yang tidak dimiliki banyak bahasa: operasi rumit bisa ditulis satu baris dan TETAP terbaca. Tukar dua variabel adalah contoh legendarisnya.",
+      "Salah satu alasan Python jadi bahasa favorit untuk scripting security dan data: ekspresif dalam satu baris.",
+    ],
+    sections: [
+      {
+        h: "Masalah klasik: menukar dua variabel",
+        p: [
+          "Cara umum di bahasa lain butuh variabel bantu (analogi: menukar isi dua gelas butuh gelas ketiga):",
+        ],
+        code: "x = 1\ny = 2\n\ntemp = x   # gelas ketiga simpan isi x\nx = y      # x sekarang isi y\ny = temp   # y sekarang isi x lama\n\nprint(x, y)   # 2 1",
+      },
+      {
+        p: [
+          "Tiga baris, satu variabel sementara, dan urutannya tidak boleh salah (aksi sekuensial!). Python menyingkatnya jadi SATU baris:",
+        ],
+      },
+      {
+        h: "Cara Python: tuple assignment",
+        code: "x = 1\ny = 2\n\nx, y = y, x   # one-liner!\n\nprint(x, y)   # 2 1",
+        p: [
+          "Ruas kanan (y, x) dievaluasi DULUHULU menjadi pasangan nilai, baru lalu di-unpack ke ruas kiri. Karena kanan selesai dulu, tidak ada konflik — tidak perlu variabel bantu.",
+        ],
+        callout:
+          "Aturan main one-liner: tujuannya singkat DAN jelas. Tidak semua blok bisa jadi one-liner (deklarasi fungsi, modul, kelas tidak). Kalau satu baris justru sulit dibaca, tulis blok biasa — keterbacaan menang.",
+      },
+      {
+        h: "Pola one-liner lain yang akan kamu temui",
+        list: [
+          "x += 1 — increment (dari lesson jenis ekspresi)",
+          "a, b = b, a — swap tanpa variabel bantu (hari ini)",
+          "Nanti di fase lanjut: list comprehension, ternary expression, dsb.",
+        ],
+      },
+    ],
+    lab: {
+      title: "Swap dan buktikan kenapa works",
+      intro: "Praktikkan dua versi swap lalu bedah kenapa versi Python aman dari konflik urutan.",
+      steps: [
+        "Buat file swap.py.",
+        "Tulis versi temp: a, b = 1, 2 lalu tukar dengan variabel temp (3 baris). Cetak hasilnya.",
+        "Tambah versi Python: c, d = 1, 2 lalu c, d = d, c. Cetak.",
+        "Break-test versi temp: hilangkan baris temp = x dan jalankan — nilai jadi salah (bukan error!). Ini bug diam-diam: hasil salah tanpa teriak.",
+        "Pakai mode interaktif: ketik p, q = 10, 20 lalu p, q = q, p+1 — cek hasilnya (p=21, q=10). Kanan dihitung dulu, sekaligus!",
+        "Refleksi: satu baris menggantikan berapa baris? Kapan versi blok tetap lebih baik?",
+      ],
+      hint: "Bug diam-diam di langkah 4 adalah alasan swap satu baris lebih aman: tidak ada state antara yang bisa keliru urutan.",
+    },
+    quiz: [
+      {
+        q: "x, y = y, x bekerja karena...",
+        options: [
+          "Python mengabaikan urutan eksekusi untuk assignment ganda",
+          "Ruas kanan dievaluasi penuh DULU menjadi pasangan nilai, baru di-unpack ke ruas kiri",
+          "Python otomatis membuat variabel temp",
+          "y dan x ditukar referensi memori secara langsung",
+        ],
+        answer: 1,
+        why: "Kunci eksekusinya: kanan dulu. (y, x) dibentuk sebagai pasangan nilai SEBELUM ada penulisan ulang variabel — sehingga tidak ada konflik urutan, tidak butuh variabel bantu.",
+      },
+      {
+        q: "Apa risiko versi swap dengan variabel temp (tanpa one-liner)?",
+        options: [
+          "Selalu error saat dijalankan",
+          "Urutan baris yang keliru menghasilkan nilai salah TANPA error — bug diam-diam",
+          "Python menolak variabel bernama temp",
+          "Lebih lambat sehingga program crash",
+        ],
+        answer: 1,
+        why: "Kalau baris temp-nya lupa atau salah urutan, program tetap jalan tapi hasilnya salah — tidak ada error yang menjerit. Bug diam-diam seperti ini paling mahal saat debugging.",
+      },
+      {
+        q: "Kapan one-liner TIDAK disarankan?",
+        options: [
+          "Ketika kodenya lebih pendek dan tetap jelas",
+          "Ketika satu baris justru sulit dibaca — keterbacaan menang",
+          "Saat memakai operator aritmetika",
+          "Saat berjalan di mode interaktif",
+        ],
+        answer: 1,
+        why: "Filsafat Python sejak lesson pertama: kode lebih sering dibaca daripada ditulis. One-liner untuk singkat-DAN-jelas; kalau jadi kriptik, tulis blok biasa. Fungsi/kelas bahkan tidak bisa dijadikan one-liner.",
+      },
+    ],
+  },
 ];
