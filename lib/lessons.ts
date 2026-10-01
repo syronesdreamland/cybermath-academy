@@ -4,6 +4,7 @@ import { SQLI_LESSONS } from "./lessons-sqli";
 import { AUTH_LESSONS } from "./lessons-auth";
 import { ACL_LESSONS } from "./lessons-acl";
 import { XSS_LESSONS } from "./lessons-xss";
+import { PYTHON_LESSONS } from "./lessons-python";
 
 export type { Lesson, QuizQ, LessonSection } from "./lesson-types";
 
@@ -14,6 +15,7 @@ export const ALL_LESSONS: Lesson[] = [
   ...AUTH_LESSONS,
   ...ACL_LESSONS,
   ...XSS_LESSONS,
+  ...PYTHON_LESSONS,
 ];
 
 const bySlug = new Map<string, Lesson>();

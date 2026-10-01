@@ -73,6 +73,7 @@ body {
 .ring-fg--acl { stroke: #059669; }
 .ring-fg--xss { stroke: #be123c; }
 .ring-fg--ml { stroke: #0e7490; }
+.ring-fg--py { stroke: #166534; }
 .ring-fg--mlp { stroke: #4d7c0f; }
 
 /* checkbox range selection highlight */
@@ -111,6 +112,7 @@ body {
 .pill--acl svg { color: #059669; }
 .pill--xss svg { color: #be123c; }
 .pill--ml svg { color: #0e7490; }
+.pill--py svg { color: #166534; }
 .pill--mlp svg { color: #4d7c0f; }
 
 .eyebrow {
@@ -162,6 +164,7 @@ body {
 .track-icon--acl { background: #d1fae5; color: #059669; }
 .track-icon--xss { background: #ffe4e6; color: #be123c; }
 .track-icon--ml { background: #e0f2fe; color: #0e7490; }
+.track-icon--py { background: #dcfce7; color: #166534; }
 .track-icon--mlp { background: #ecfccb; color: #4d7c0f; }
 .track-body { flex: 1; min-width: 0; }
 .track-label {
@@ -215,6 +218,7 @@ body {
 .node--acl { border-left: 4px solid #059669; }
 .node--xss { border-left: 4px solid #be123c; }
 .node--ml { border-left: 4px solid #0e7490; }
+.node--py { border-left: 4px solid #166534; }
 .node--mlp { border-left: 4px solid #4d7c0f; }
 
 /* checklist item */

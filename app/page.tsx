@@ -13,6 +13,7 @@ import {
   FlaskConical,
   BrainCircuit,
   Dumbbell,
+  FileCode2,
   ArrowRight,
 } from "lucide-react";
 import {
@@ -24,8 +25,9 @@ import {
   AUTH_PHASES,
   ACL_PHASES,
   XSS_PHASES,
-  DICODING_ML_PHASES,
   MLP_PHASES,
+  DICODING_ML_PHASES,
+  PYTHON_PHASES,
 } from "@/lib/data";
 import {
   loadProgress,
@@ -50,6 +52,7 @@ export default function Home() {
   const xss = categoryProgress(state, "xss", XSS_PHASES);
   const ml = categoryProgress(state, "ml", DICODING_ML_PHASES);
   const mlp = categoryProgress(state, "mlp", MLP_PHASES);
+  const py = categoryProgress(state, "python", PYTHON_PHASES);
 
   const cards: Array<{
     href: string;
@@ -69,6 +72,7 @@ export default function Home() {
     { href: "/xss", icon: <FlaskConical size={28} />, accent: "xss", label: "Web Security", title: "PortSwigger — Cross-Site Scripting", meta: xss },
     { href: "/ml", icon: <BrainCircuit size={28} />, accent: "ml", label: "Machine Learning 🤖", title: "Dicoding — ML untuk Pemula", meta: ml },
     { href: "/mlp", icon: <Dumbbell size={28} />, accent: "mlp", label: "Machine Learning", title: "Practice — Kaggle Learn", meta: mlp },
+    { href: "/python", icon: <FileCode2 size={28} />, accent: "py", label: "Programming 🐍", title: "Python — Dasar sampai Profesional", meta: py },
   ];
 
   return (

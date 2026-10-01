@@ -35,7 +35,7 @@ import {
 type TrackViewProps = {
   category: string;
   phases: Phase[];
-  accent: "cyber" | "math" | "pentest" | "aws" | "sqli" | "auth" | "acl" | "xss" | "ml" | "mlp";
+  accent: "cyber" | "math" | "pentest" | "aws" | "sqli" | "auth" | "acl" | "xss" | "ml" | "mlp" | "py";
   sourceLabel: string;
   sourceUrl: string;
   sourceIcon?: "github" | "youtube" | "dicoding";
@@ -56,7 +56,8 @@ export type Accent =
   | "acl"
   | "xss"
   | "ml"
-  | "mlp";
+  | "mlp"
+  | "py";
 
 const CAT_META: Record<string, { label: string; title: string }> = {
   cyber: { label: "Cybersecurity", title: "90-Day Study Plan" },

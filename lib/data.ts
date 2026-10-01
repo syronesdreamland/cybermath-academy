@@ -1442,3 +1442,165 @@ export const DICODING_ML_PHASES: Phase[] = [
     ],
   },
 ];
+
+
+// ============================================================
+// Track Python — Dicoding Academy 86 "Memulai Pemrograman dengan Python"
+// 58 modul -> 12 fase. Item url pakai tid asli Dicoding -> match lesson
+// internal via TID_RE di TrackView (tutorials/(\d+)) -> lib/lessons-python.ts
+// ============================================================
+export const PYTHON_PHASES: Phase[] = [
+  {
+    id: "py-dasar",
+    name: "Fase 1 — Kenalan dengan Python",
+    icon: "🐍",
+    desc: "Apa itu Python, kenapa populer, dan cara menjalankan kode pertamamu — online maupun lokal.",
+    items: [
+      { type: "resource", label: "Pengenalan Python", url: "https://www.dicoding.com/academies/86/tutorials/4733", sub: "materi" },
+      { type: "resource", label: "Python Interpreter", url: "https://www.dicoding.com/academies/86/tutorials/6429", sub: "materi" },
+      { type: "resource", label: "Bersiap Membuat Kode Program di Lokal", url: "https://www.dicoding.com/academies/86/tutorials/4738", sub: "materi" },
+      { type: "resource", label: "Menjalankan Kode Program di Lokal", url: "https://www.dicoding.com/academies/86/tutorials/10747", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-sequential",
+    name: "Fase 2 — Aksi Sekuensial",
+    icon: "➡️",
+    desc: "Program = urutan instruksi. Tulis program pertamamu yang berjalan dari atas ke bawah.",
+    items: [
+      { type: "resource", label: "Pengenalan Aksi Sekuensial", url: "https://www.dicoding.com/academies/86/tutorials/6424", sub: "materi" },
+      { type: "resource", label: "Rangkuman Aksi Sekuensial", url: "https://www.dicoding.com/academies/86/tutorials/4748", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-var-exp",
+    name: "Fase 3 — Variabel & Ekspresi",
+    icon: "🧮",
+    desc: "Simpan data di variabel, hitung dengan ekspresi, pahami abstraksi data.",
+    items: [
+      { type: "resource", label: "Variable dan Assignment", url: "https://www.dicoding.com/academies/86/tutorials/4751", sub: "materi" },
+      { type: "resource", label: "Pengertian Ekspresi", url: "https://www.dicoding.com/academies/86/tutorials/4754", sub: "materi" },
+      { type: "resource", label: "Jenis-Jenis Ekspresi", url: "https://www.dicoding.com/academies/86/tutorials/4755", sub: "materi" },
+      { type: "resource", label: "Abstraksi Data", url: "https://www.dicoding.com/academies/86/tutorials/4758", sub: "materi" },
+      { type: "resource", label: "Rangkuman Ekspresi", url: "https://www.dicoding.com/academies/86/tutorials/4759", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-tipe-data",
+    name: "Fase 4 — Tipe Data & Operasinya",
+    icon: "📊",
+    desc: "Angka, karakter, string — dan cara mengubah-ubahnya lewat operator dan transformasi.",
+    items: [
+      { type: "resource", label: "Tipe Data", url: "https://www.dicoding.com/academies/86/tutorials/32500", sub: "materi" },
+      { type: "resource", label: "Jenis-Jenis Operator", url: "https://www.dicoding.com/academies/86/tutorials/4762", sub: "materi" },
+      { type: "resource", label: "Transformasi Angka, Karakter, dan String", url: "https://www.dicoding.com/academies/86/tutorials/32505", sub: "materi" },
+      { type: "resource", label: "One-liner", url: "https://www.dicoding.com/academies/86/tutorials/4747", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-control",
+    name: "Fase 5 — Control Flow",
+    icon: "🔀",
+    desc: "Program yang bisa mengambil keputusan (percabangan) dan mengulang pekerjaan (loop).",
+    items: [
+      { type: "resource", label: "Percabangan dan Ternary Operators", url: "https://www.dicoding.com/academies/86/tutorials/4766", sub: "materi" },
+      { type: "resource", label: "Perulangan", url: "https://www.dicoding.com/academies/86/tutorials/4769", sub: "materi" },
+      { type: "resource", label: "Rangkuman Control Flow", url: "https://www.dicoding.com/academies/86/tutorials/6416", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-error",
+    name: "Fase 6 — Error Handling",
+    icon: "🛡️",
+    desc: "Program yang tangguh: kenali jenis error dan tangani exception dengan rapi.",
+    items: [
+      { type: "resource", label: "Penanganan Kesalahan (Error & Exception Handling)", url: "https://www.dicoding.com/academies/86/tutorials/4771", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-array",
+    name: "Fase 7 — Array & Pemrosesan Sekuensial",
+    icon: "🧱",
+    desc: "Struktur data linear pertama: simpan banyak nilai, proses satu per satu.",
+    items: [
+      { type: "resource", label: "Fundamental Array", url: "https://www.dicoding.com/academies/86/tutorials/5017", sub: "materi" },
+      { type: "resource", label: "Implementasi Array dengan Python", url: "https://www.dicoding.com/academies/86/tutorials/5020", sub: "materi" },
+      { type: "resource", label: "Pemrosesan Sekuensial pada Array", url: "https://www.dicoding.com/academies/86/tutorials/5077", sub: "materi" },
+      { type: "resource", label: "Latihan Array", url: "https://www.dicoding.com/academies/86/tutorials/10732", sub: "latihan" },
+      { type: "resource", label: "Rangkuman Array dan Pemrosesannya", url: "https://www.dicoding.com/academies/86/tutorials/5084", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-matrix",
+    name: "Fase 8 — Matriks",
+    icon: "🔢",
+    desc: "Array 2 dimensi: dasar penting sebelum masuk data science dan ML.",
+    items: [
+      { type: "resource", label: "Fundamental Matriks", url: "https://www.dicoding.com/academies/86/tutorials/6432", sub: "materi" },
+      { type: "resource", label: "Implementasi Matriks pada Python", url: "https://www.dicoding.com/academies/86/tutorials/6435", sub: "materi" },
+      { type: "resource", label: "Operasi Matriks pada Python", url: "https://www.dicoding.com/academies/86/tutorials/10737", sub: "materi" },
+      { type: "resource", label: "Rangkuman Matriks", url: "https://www.dicoding.com/academies/86/tutorials/32958", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-data",
+    name: "Fase 9 — List, Set, String & Duck Typing",
+    icon: "📦",
+    desc: "Struktur data built-in Python dan filosofi typing-nya yang fleksibel.",
+    items: [
+      { type: "resource", label: "Operasi pada List, Set, dan String", url: "https://www.dicoding.com/academies/86/tutorials/32510", sub: "materi" },
+      { type: "resource", label: "Duck Typing", url: "https://www.dicoding.com/academies/86/tutorials/5082", sub: "materi" },
+      { type: "resource", label: "Data Typing", url: "https://www.dicoding.com/academies/86/tutorials/6414", sub: "materi" },
+      { type: "resource", label: "Rangkuman Berinteraksi dengan Data", url: "https://www.dicoding.com/academies/86/tutorials/32515", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-fungsi",
+    name: "Fase 10 — Fungsi & Prosedur",
+    icon: "🔧",
+    desc: "Pecah program jadi blok yang bisa dipakai ulang: subprogram, fungsi, prosedur.",
+    items: [
+      { type: "resource", label: "Definisi Subprogram", url: "https://www.dicoding.com/academies/86/tutorials/10742", sub: "materi" },
+      { type: "resource", label: "Fungsi", url: "https://www.dicoding.com/academies/86/tutorials/32963", sub: "materi" },
+      { type: "resource", label: "Prosedur", url: "https://www.dicoding.com/academies/86/tutorials/32968", sub: "materi" },
+      { type: "resource", label: "Rangkuman Subprogram", url: "https://www.dicoding.com/academies/86/tutorials/32973", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-oop",
+    name: "Fase 11 — OOP: Class, Object, Inheritance",
+    icon: "🏛️",
+    desc: "Modelkan dunia nyata jadi objek: class, method, dan pewarisan.",
+    items: [
+      { type: "resource", label: "Class, Object, dan Method", url: "https://www.dicoding.com/academies/86/tutorials/33003", sub: "materi" },
+      { type: "resource", label: "Inheritance (Pewarisan)", url: "https://www.dicoding.com/academies/86/tutorials/33008", sub: "materi" },
+      { type: "resource", label: "Rangkuman Object-Oriented Programming (OOP)", url: "https://www.dicoding.com/academies/86/tutorials/33013", sub: "materi" },
+    ],
+  },
+  {
+    id: "py-pro",
+    name: "Fase 12 — Kode Profesional: Style, Test, Library",
+    icon: "🚀",
+    desc: "Standar kerja programmer: PEP 8, unit testing, dan peta library populer Python.",
+    items: [
+      { type: "resource", label: "Pengecekan Style Guide PEP8", url: "https://www.dicoding.com/academies/86/tutorials/33258", sub: "materi" },
+      { type: "resource", label: "Memformat Kode", url: "https://www.dicoding.com/academies/86/tutorials/33263", sub: "materi" },
+      { type: "resource", label: "Style Guide Statement Gabungan", url: "https://www.dicoding.com/academies/86/tutorials/33268", sub: "materi" },
+      { type: "resource", label: "Style Guide Prinsip Penamaan pada Python", url: "https://www.dicoding.com/academies/86/tutorials/33273", sub: "materi" },
+      { type: "resource", label: "Rangkuman Style Guide pada Python", url: "https://www.dicoding.com/academies/86/tutorials/33278", sub: "materi" },
+      { type: "resource", label: "Pengantar Unit Testing", url: "https://www.dicoding.com/academies/86/tutorials/33288", sub: "materi" },
+      { type: "resource", label: "Penerapan Unit Test dengan Library unittest", url: "https://www.dicoding.com/academies/86/tutorials/33293", sub: "materi" },
+      { type: "resource", label: "Rangkuman Unit Testing", url: "https://www.dicoding.com/academies/86/tutorials/33298", sub: "materi" },
+      { type: "resource", label: "Pengenalan Library", url: "https://www.dicoding.com/academies/86/tutorials/33308", sub: "materi" },
+      { type: "resource", label: "Library Text Processing", url: "https://www.dicoding.com/academies/86/tutorials/33313", sub: "materi" },
+      { type: "resource", label: "Library Matematika", url: "https://www.dicoding.com/academies/86/tutorials/33318", sub: "materi" },
+      { type: "resource", label: "Library Parser", url: "https://www.dicoding.com/academies/86/tutorials/33323", sub: "materi" },
+      { type: "resource", label: "Library Pengolahan Data", url: "https://www.dicoding.com/academies/86/tutorials/33328", sub: "materi" },
+      { type: "resource", label: "Library File Management", url: "https://www.dicoding.com/academies/86/tutorials/33333", sub: "materi" },
+      { type: "resource", label: "Library Web Scraping", url: "https://www.dicoding.com/academies/86/tutorials/33338", sub: "materi" },
+      { type: "resource", label: "Library Machine Learning", url: "https://www.dicoding.com/academies/86/tutorials/33343", sub: "materi" },
+      { type: "resource", label: "Library Web Development", url: "https://www.dicoding.com/academies/86/tutorials/33348", sub: "materi" },
+      { type: "resource", label: "Rangkuman Library Populer pada Python", url: "https://www.dicoding.com/academies/86/tutorials/33353", sub: "materi" },
+    ],
+  },
+];
