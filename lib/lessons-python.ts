@@ -6,9 +6,12 @@ import type { Lesson } from "./lesson-types";
 // bukan salinan). Link sumber asli tetap dicantumkan per lesson.
 // ============================================================
 
+import { PYTHON_LESSONS_2 } from "./lessons-python-2";
+
 const SRC = "Dicoding — Memulai Pemrograman dengan Python";
 
 export const PYTHON_LESSONS: Lesson[] = [
+  ...PYTHON_LESSONS_2,
   {
     slug: "py-01",
     tid: "4733",

@@ -61,7 +61,6 @@ const SOURCE_URL_TID: Array<[RegExp, string]> = [
   [/tutorials\/4758/, "py-08"],
   [/tutorials\/4759/, "py-09"],
   [/tutorials\/6416/, "py-18"],
-  [/tutorials\/32515/, "py-10"],
   [/tutorials\/5084/, "py-21"],
   [/tutorials\/32958/, "py-24"],
 ];
