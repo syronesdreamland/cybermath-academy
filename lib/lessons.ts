@@ -64,8 +64,20 @@ const SOURCE_URL_TID: Array<[RegExp, string]> = [
   [/tutorials\/5084/, "py-21"],
   [/tutorials\/32958/, "py-24"],
   // Fase 12 — rangkuman per domain -> buka lesson domain terkait
+  [/tutorials\/33263/, "py-36"],
+  [/tutorials\/33268/, "py-36"],
+  [/tutorials\/33273/, "py-36"],
   [/tutorials\/33278/, "py-36"],
+  [/tutorials\/33293/, "py-37"],
   [/tutorials\/33298/, "py-37"],
+  [/tutorials\/33313/, "py-39"],
+  [/tutorials\/33318/, "py-39"],
+  [/tutorials\/33323/, "py-39"],
+  [/tutorials\/33328/, "py-39"],
+  [/tutorials\/33333/, "py-39"],
+  [/tutorials\/33338/, "py-39"],
+  [/tutorials\/33343/, "py-39"],
+  [/tutorials\/33348/, "py-39"],
   [/tutorials\/33353/, "py-39"],
 ];
 
