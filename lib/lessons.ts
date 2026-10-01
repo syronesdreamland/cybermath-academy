@@ -6,6 +6,7 @@ import { ACL_LESSONS } from "./lessons-acl";
 import { XSS_LESSONS } from "./lessons-xss";
 import { PYTHON_LESSONS } from "./lessons-python";
 import { ML_LESSONS } from "./lessons-ml-1";
+import { ML_LESSONS_2 } from "./lessons-ml-2";
 
 export type { Lesson, QuizQ, LessonSection } from "./lesson-types";
 
@@ -18,6 +19,7 @@ export const ALL_LESSONS: Lesson[] = [
   ...XSS_LESSONS,
   ...PYTHON_LESSONS,
   ...ML_LESSONS,
+  ...ML_LESSONS_2,
 ];
 
 const bySlug = new Map<string, Lesson>();
