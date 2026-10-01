@@ -70,6 +70,7 @@ const CAT_META: Record<string, { label: string; title: string }> = {
   xss: { label: "Web Security", title: "PortSwigger — Cross-Site Scripting" },
   ml: { label: "Machine Learning", title: "Belajar ML untuk Pemula — Dicoding" },
   mlp: { label: "Machine Learning", title: "ML Practice — Kaggle Learn" },
+  python: { label: "Programming", title: "Python — Dasar sampai Profesional — Dicoding" },
 };
 
 function pct(done: number, total: number) {
