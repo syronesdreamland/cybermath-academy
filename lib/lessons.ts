@@ -63,6 +63,10 @@ const SOURCE_URL_TID: Array<[RegExp, string]> = [
   [/tutorials\/6416/, "py-18"],
   [/tutorials\/5084/, "py-21"],
   [/tutorials\/32958/, "py-24"],
+  // Fase 12 — rangkuman per domain -> buka lesson domain terkait
+  [/tutorials\/33278/, "py-36"],
+  [/tutorials\/33298/, "py-37"],
+  [/tutorials\/33353/, "py-39"],
 ];
 
 export function getLessonBySourceUrl(url: string): Lesson | undefined {

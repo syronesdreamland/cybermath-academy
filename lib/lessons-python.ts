@@ -7,11 +7,13 @@ import type { Lesson } from "./lesson-types";
 // ============================================================
 
 import { PYTHON_LESSONS_2 } from "./lessons-python-2";
+import { PYTHON_LESSONS_3 } from "./lessons-python-3";
 
 const SRC = "Dicoding — Memulai Pemrograman dengan Python";
 
 export const PYTHON_LESSONS: Lesson[] = [
   ...PYTHON_LESSONS_2,
+  ...PYTHON_LESSONS_3,
   {
     slug: "py-01",
     tid: "4733",
